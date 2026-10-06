@@ -10,9 +10,14 @@ const CONFIG = {
   pricing: { pricePerKm: 4000, firstWaitingHour: 30000, additionalWaitingHour: 15000 },
   routing: {
     geocoderUrl: "https://nominatim.openstreetmap.org/search",
-    routerUrl: "https://router.project-osrm.org/route/v1/driving",
+    fallbackGeocoderUrl: "https://photon.komoot.io/api/",
+    routerUrls: [
+      "https://router.project-osrm.org/route/v1/driving",
+      "https://routing.openstreetmap.de/routed-car/route/v1/driving"
+    ],
     countryCodes: "id",
-    timeoutMs: 9000,
+    timeoutMs: 8000,
+    minGapMs: 1100,   // Nominatim membatasi ~1 permintaan/detik
     longTripKm: 100
   },
   booking: { maxNotesLength: 500, maxPassengers: 8 }
