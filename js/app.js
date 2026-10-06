@@ -30,7 +30,8 @@
       row("Distance Cost", fare ? rp(fare.distanceCost) : tbc), row("Waiting", wait + (fare && s.waitingHours ? " (" + rp(fare.waitingCost) + ")" : "")),
       row("Estimated Total", fare ? rp(fare.estimatedTotal) : tbc, "total"), row("Toll & Parking", "Not included"));
     $("routeNote").textContent = !route ? "We couldn't automatically calculate the route. Please continue with WhatsApp and we'll confirm the distance and final fare manually."
-      : route.distanceKm > CONFIG.routing.longTripKm ? "Long-distance trip. Final fare must be confirmed by driver." : "";
+      : route.distanceKm > CONFIG.routing.longTripKm ? "Long-distance trip. Final fare must be confirmed by driver."
+      : route.approximate ? "Distance is approximate because we could not find the exact address. Final fare is confirmed by the driver." : "";
     [["Customer", s.name], ["WhatsApp", s.whatsapp], ["Service", s.service], ["Trip", s.tripType === "round-trip" ? "Round Trip" : "One Way"],
      ["Pickup Date", WhatsAppService.fmtDate(s.date)], ["Pickup Time", s.time], ["Pickup", s.pickup], ["Destination", s.destination],
      ["Passengers", String(s.passengers)], ["Waiting Time", wait], ["Estimated Fare", fare ? rp(fare.estimatedTotal) : tbc],
@@ -45,7 +46,7 @@
     busy = true; const btn = $("estimateBtn"); btn.disabled = true; btn.textContent = "CALCULATING..."; $("e-form").textContent = "Finding your route...";
     try {
       if (!route || routeKey !== keyOf(s)) { route = null; routeKey = keyOf(s); route = await RoutingService.getRouteDistance(s.pickup, s.destination); }
-    } catch (e) { route = null; if (!navigator.onLine) { $("e-form").textContent = "Internet connection is unavailable. Please check your connection and try again."; busy = false; btn.disabled = false; btn.textContent = "GET ESTIMATE"; return; } }
+    } catch (e) { console.error("[route]", e); route = null; if (!navigator.onLine) { $("e-form").textContent = "Internet connection is unavailable. Please check your connection and try again."; busy = false; btn.disabled = false; btn.textContent = "GET ESTIMATE"; return; } }
     $("e-form").textContent = ""; busy = false; btn.disabled = false; btn.textContent = "GET ESTIMATE";
     render(); $("result").scrollIntoView({ behavior: "smooth", block: "start" });
   });
