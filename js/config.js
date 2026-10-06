@@ -7,7 +7,7 @@ const CONFIG = {
     serviceHours: ""    // isi bila sudah pasti, mis. "Setiap hari, 05.00-22.00". Kosong = tidak ditampilkan
   },
   whatsapp: { driverNumber: "6281573011713" }, // GANTI sebelum deploy (format 62...)
-  pricing: { pricePerKm: 4000, firstWaitingHour: 30000, additionalWaitingHour: 15000 },
+  pricing: { pricePerKm: 4500, firstWaitingHour: 30000, additionalWaitingHour: 15000 },
   routing: {
     geocoderUrl: "https://nominatim.openstreetmap.org/search",
     fallbackGeocoderUrl: "https://photon.komoot.io/api/",
