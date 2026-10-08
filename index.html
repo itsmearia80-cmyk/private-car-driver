@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Private Car + Driver | Airport, Hospital & Event Transport</title>
-<meta name="description" content="Private car and driver service for airport transfers, hospital visits, events and personal trips.">
-<meta property="og:title" content="Private Car + Driver | Airport, Hospital & Event Transport">
-<meta property="og:description" content="Private car and driver service for airport transfers, hospital visits, events and personal trips.">
+<title>Privaro | Private Ride. Personal Driver.</title>
+<meta name="description" content="Privaro. Private Ride. Personal Driver. Private car with driver for airport transfers, hospital visits, events and personal trips.">
+<meta property="og:title" content="Privaro | Private Ride. Personal Driver.">
+<meta property="og:description" content="Privaro. Private Ride. Personal Driver. Private car with driver for airport transfers, hospital visits, events and personal trips.">
 <meta property="og:image" content="assets/og.svg">
 <meta property="og:type" content="website">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -14,12 +14,12 @@
 </head>
 <body>
 <header class="top"><div class="wrap bar">
-  <a class="brand" href="#" data-brand>PRIVATE CAR + DRIVER</a>
+  <a class="brand" href="#" data-brand>Privaro</a>
   <nav aria-label="Main"><a href="#services">Services</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a class="btn sm" href="#booking">Book a ride</a></nav>
 </div></header>
 <main>
 <section class="hero"><div class="wrap">
-  <h1>Comfortable rides.<br>Personal service.</h1>
+  <h1>Private Ride.<br>Personal Driver.</h1>
   <p class="lead">Private car and driver for airport transfers, hospital visits, events and personal trips. Airport, hospital, events and private trips, booked in one form.</p>
   <div class="cta"><a class="btn" href="#booking">Book a ride</a><a class="btn ghost" id="waTop" href="#" target="_blank" rel="noopener">WhatsApp us</a></div>
   <ul class="trust"><li>Private vehicle</li><li>Professional driver</li><li>Airport &amp; event trips</li><li>Transparent estimated pricing</li><li>Direct WhatsApp confirmation</li><li>Toll &amp; parking not included in estimate</li></ul>
@@ -61,7 +61,7 @@
       <p class="hint" id="h-loc">Enter a place name, address, building, hotel, hospital or airport.</p>
       <div class="two"><div><label for="passengers">Number of Passengers *</label><input id="passengers" type="number" min="1" value="1" inputmode="numeric" aria-describedby="e-passengers"><p class="err" id="e-passengers" role="alert"></p></div>
       <div><label for="waiting">Waiting Time</label><select id="waiting"><option value="0">No Waiting</option><option value="1">1 Hour</option><option value="2">2 Hours</option><option value="3">3 Hours</option><option value="4">4 Hours</option><option value="5">5 Hours</option><option value="6">6 Hours</option></select></div></div>
-      <p class="hint">Waiting: first hour Rp30.000, each additional hour Rp15.000.</p>
+      <p class="hint" id="waitHint"></p>
       <label for="notes">Additional Notes</label><textarea id="notes" rows="3" maxlength="500" placeholder="Example: 2 passengers, airport pickup, flight arrival at 08:30."></textarea>
     </fieldset>
     <p class="err form" id="e-form" role="alert"></p>
@@ -93,10 +93,12 @@
 
 <section class="band dark"><div class="wrap cta2"><h2>Prefer to chat first?</h2><a class="btn" id="waBottom" href="#" target="_blank" rel="noopener">WhatsApp us</a></div></section>
 </main>
-<footer class="wrap foot"><b data-brand>PRIVATE CAR + DRIVER</b><span id="fWa"></span><span id="fArea"></span><span id="fHours"></span></footer>
+<footer class="wrap foot"><b data-brand>Privaro</b><span id="fWa"></span><span id="fArea"></span><span id="fHours"></span></footer>
 <script src="js/config.js"></script>
 <script src="js/utils/validation.js"></script>
 <script src="js/services/pricingService.js"></script>
+<script src="js/services/googleRoutesProvider.js"></script>
+<script src="js/services/osrmProvider.js"></script>
 <script src="js/services/routingService.js"></script>
 <script src="js/services/whatsappService.js"></script>
 <script src="js/app.js"></script>

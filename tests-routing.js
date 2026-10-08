@@ -1,30 +1,29 @@
-// Tes logika routing dengan fetch palsu: node tests-routing.js
+// Tes logika routing (fetch palsu): node tests-routing.js
 const fs = require("fs");
-global.CONFIG = new Function(fs.readFileSync("js/config.js", "utf8") + "; return CONFIG;")();
-CONFIG.routing.minGapMs = 0;
-const R = require("./js/services/routingService.js");
-let calls = [], ok = true;
+const src = ["js/config.js", "js/services/googleRoutesProvider.js", "js/services/osrmProvider.js", "js/services/routingService.js"]
+  .map((f) => fs.readFileSync(f, "utf8").replace(/if \(typeof module[^\n]*\n?/g, "")).join("\n");
+const { CONFIG, RoutingService } = new Function(src + "; return { CONFIG, RoutingService };")();
+global.CONFIG = CONFIG; CONFIG.routing.osrm.minGapMs = 0;
+let ok = true, calls = [];
 const t = (n, c) => { console.log((c ? "PASS " : "FAIL ") + n); if (!c) { ok = false; process.exitCode = 1; } };
 const js = (o, s = 200) => ({ ok: s < 400, status: s, json: async () => o });
-const osrm = (m) => js({ code: "Ok", routes: [{ distance: m, duration: 3600 }] });
+const osrmFetch = (u) => u.includes("nominatim") ? js([{ lat: "-6.2", lon: "106.8" }]) : js({ code: "Ok", routes: [{ distance: 42500, duration: 3600 }] });
+const run = () => RoutingService.calculateRoute("A", "B");
 (async () => {
-  // 1) Nominatim 429 -> Photon; OSRM utama mati -> OSRM cadangan
-  global.fetch = async (u) => { calls.push(u);
-    if (u.includes("nominatim")) return js({}, 429);
-    if (u.includes("photon")) return js({ features: [{ geometry: { coordinates: [106.8, -6.2] } }] });
-    if (u.includes("project-osrm")) return js({}, 503);
-    return osrm(42500); };
-  let r = await R.getRouteDistance("A", "B");
-  t("fallback geocoder + router", Math.abs(r.distanceKm - 42.5) < 1e-9 && r.approximate === false);
-  // 2) alamat panjang tidak ketemu -> varian perkiraan
-  calls = [];
-  global.fetch = async (u) => { calls.push(u);
-    if (u.includes("nominatim")) return js(decodeURIComponent(u).includes("q=Jl. X No 5, Cinangka, Depok") ? [] : [{ lat: "-6.4", lon: "106.8" }]);
-    return osrm(10000); };
-  r = await R.getRouteDistance("Jl. X No 5, Cinangka, Depok", "Bandara");
-  t("varian perkiraan ditandai approximate", r.approximate === true && r.distanceKm === 10);
-  // 3) semua gagal -> melempar error (UI menampilkan To be confirmed)
+  CONFIG.routing.google.apiKey = "TEST";
+  global.fetch = async (u) => { calls.push(u); return u.includes("googleapis") ? js({ routes: [{ distanceMeters: 42500, duration: "3600s" }] }) : osrmFetch(u); };
+  let r = await run();
+  t("google sukses, OSRM tidak dipanggil", r.provider === "google" && r.distanceKm === 42.5 && r.durationMinutes === 60 && !calls.some((u) => u.includes("osrm") || u.includes("nominatim")));
+  global.fetch = async (u) => u.includes("googleapis") ? js({}, 403) : osrmFetch(u);
+  r = await run(); t("google 403 -> fallback OSRM", r.provider === "osrm" && r.distanceKm === 42.5);
+  global.fetch = async (u) => u.includes("googleapis") ? js({}) : osrmFetch(u);
+  r = await run(); t("google tanpa rute -> fallback OSRM", r.provider === "osrm");
+  CONFIG.routing.google.apiKey = "";
+  r = await run(); t("tanpa API key -> langsung OSRM", r.provider === "osrm");
   global.fetch = async () => js({}, 500);
-  let threw = false; try { await R.getRouteDistance("A", "B"); } catch (e) { threw = true; }
-  t("semua gagal -> error", threw);
+  let threw = false; try { await run(); } catch (e) { threw = true; } t("semua provider gagal -> error (UI: tanpa tarif)", threw);
+  CONFIG.routing.google.apiKey = "TEST"; CONFIG.routing.enableFallback = false; calls = [];
+  global.fetch = async (u) => { calls.push(u); return js({}, 403); };
+  threw = false; try { await run(); } catch (e) { threw = true; }
+  t("fallback dimatikan -> error, OSRM tidak dicoba", threw && calls.length === 1);
 })();
