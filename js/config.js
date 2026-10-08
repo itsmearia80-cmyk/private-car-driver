@@ -6,7 +6,7 @@ const CONFIG = {
     serviceHours: ""                // isi bila sudah pasti. Kosong = tidak ditampilkan
   },
   whatsapp: { driverNumber: "628XXXXXXXXXX" }, // GANTI (format 62..., tanpa + dan tanpa 0)
-  pricing: { pricePerKm: 5000, firstWaitingHour: 30000, additionalWaitingHour: 15000 },
+  pricing: { pricePerKm: 5250, firstWaitingHour: 30000, additionalWaitingHour: 15000 },
   routing: {
     primary: "google",              // "google" | "osrm"
     fallback: "osrm",
