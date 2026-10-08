@@ -133,3 +133,20 @@ Catatan: key yang ditaruh di `config.js` terlihat publik oleh siapa pun yang mem
 ## Lampiran B - Jika alamat `*.workers.dev`
 
 Cloudflare kini sering membuat proyek sebagai Worker dengan static assets (alamat `nama.workers.dev`), bukan Pages (`nama.pages.dev`). Keduanya menyajikan situs statis ini dengan baik. Isian build tetap: tanpa build command, direktori aset di root (`/`). Untuk mengganti nama proyek, buat proyek baru dari repository yang sama; nama di alamat tidak bisa sekadar diedit.
+
+## Lampiran C - Google Routing tidak jalan ("To be confirmed" terus)
+
+Buka situs dengan menambahkan `?debug=1` di URL (contoh: `https://nama-situs.workers.dev/?debug=1`), isi form, tekan GET ESTIMATE. Kotak hitam di bawah hasil menampilkan penyebab sebenarnya. Key Anda tidak pernah ditampilkan. Cocokkan pesannya:
+
+| Pesan di kotak debug | Artinya | Perbaikan |
+|---|---|---|
+| `Google API key terisi: TIDAK` | `apiKey` di `js/config.js` (versi di GitHub) kosong. Sering terjadi karena `config.js` tertimpa file dari zip | Isi `apiKey` di `config.js` di GitHub, commit, tunggu deploy |
+| `google: HTTP 403 ... referer ... blocked` | Pembatasan HTTP referrer tidak cocok dengan domain situs | Di Google Cloud > Credentials > key > Websites, tambahkan persis domain situs Anda, mis. `https://nama-situs.workers.dev/*` |
+| `google: HTTP 403 ... PERMISSION_DENIED` / `API_KEY_SERVICE_BLOCKED` | Routes API belum diaktifkan, atau key tidak diizinkan memakai Routes API | Aktifkan **Routes API** di Library, dan pada *API restrictions* key pilih Routes API |
+| `google: HTTP 403 ... billing` | Billing belum aktif di project | Aktifkan Billing di project Google Cloud |
+| `google: HTTP 400 ... API key not valid` | Key salah ketik / terpotong | Salin ulang key utuh ke `config.js` |
+| `google: HTTP 429` | Kuota habis | Cek Quotas dan Billing |
+| `google: Failed to fetch` | Diblokir browser (ekstensi pemblokir iklan/privasi, atau pembatasan jaringan) atau CORS | Coba tanpa ekstensi, di browser/jaringan lain, lalu kirim ke saya pesan di Console (F12) |
+| `google: rute tidak ditemukan` | Google tidak menemukan alamat/rute | Perjelas alamat (nama jalan, kelurahan, kota) |
+
+Jika Google gagal, situs otomatis mencoba OSRM. Jika baris `osrm: GAGAL` juga muncul, layanan gratisnya sedang membatasi/mati, dan tarif tidak akan dihitung.

@@ -48,3 +48,4 @@ details{border-bottom:1px solid var(--color-border);padding:14px 0}summary{curso
 @media(max-width:760px){.herogrid{grid-template-columns:1fr}.logo-card{max-width:360px}}
 .brand .logo{height:60px;width:auto;display:block}html{scroll-padding-top:84px}
 @media(max-width:560px){.bar{height:64px}.brand .logo{height:50px}html{scroll-padding-top:72px}}
+.debug{background:#111;color:#9fe3b0;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;padding:12px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0}

@@ -5,6 +5,12 @@
   const MSG_OFFLINE = "Koneksi internet tidak tersedia, jadi rute belum dapat dihitung. Anda tetap bisa mengirim booking via WhatsApp saat koneksi kembali.";
   let route = null, routeKey = "", failMsg = "", busy = false, ready = false;
 
+  const DEBUG = new URLSearchParams(location.search).has("debug"); // tambahkan ?debug=1 di URL untuk melihat penyebab kegagalan routing
+  function showTrace() {
+    if (!DEBUG) return;
+    let p = $("debug"); if (!p) { p = document.createElement("pre"); p.id = "debug"; p.className = "debug"; $("routeNote").after(p); }
+    p.textContent = "DEBUG (hanya muncul dengan ?debug=1)\nDomain: " + location.origin + "\nGoogle API key terisi: " + (CONFIG.routing.google.apiKey ? "ya" : "TIDAK") + "\n" + RoutingService.getTrace().join("\n");
+  }
   const read = () => ({
     name: $("name").value.trim(), whatsapp: $("whatsapp").value.trim(), service: $("service").value,
     tripType: form.tripType.value, date: $("date").value, time: $("time").value,
@@ -53,7 +59,7 @@
       try { route = await RoutingService.calculateRoute(s.pickup, s.destination); routeKey = keyOf(s); }
       catch (e) { console.error("[route]", e); route = null; failMsg = MSG_FAIL; }
     }
-    $("e-form").textContent = ""; busy = false; btn.disabled = false; btn.textContent = "GET ESTIMATE";
+    showTrace(); $("e-form").textContent = ""; busy = false; btn.disabled = false; btn.textContent = "GET ESTIMATE";
     render(); $("result").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
