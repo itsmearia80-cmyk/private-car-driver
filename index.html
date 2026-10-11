@@ -17,12 +17,12 @@
 <body>
 <header class="top"><div class="wrap bar">
   <a class="brand" href="#" aria-label="Privaro, back to top"><img class="logo" src="assets/logo-header.webp" width="360" height="216" alt="Privaro. Private Ride. Personal Driver."></a>
-  <nav aria-label="Main"><a href="#services">Services</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a class="btn sm" href="#booking">Book a ride</a></nav>
+  <nav aria-label="Main"><a href="#services">Services</a><a href="#packages">Packages</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a class="btn sm" href="#booking">Book a ride</a></nav>
 </div></header>
 <main>
 <section class="hero"><div class="wrap herogrid"><div>
   <h1>Private Ride.<br>Personal Driver.</h1>
-  <p class="lead">Currently, we only serve Jakarta, Depok, and South Tangerang areas. Private car and driver for airport transfers, hospital visits, events and personal trips booked in one form.</p>
+  <p class="lead">Private car and driver for airport transfers, hospital visits, events and personal trips. Airport, hospital, events and private trips, booked in one form.</p>
   <div class="cta"><a class="btn" href="#booking">Book a ride</a><a class="btn ghost" id="waTop" href="#" target="_blank" rel="noopener">WhatsApp us</a></div>
   <ul class="trust"><li>Private vehicle</li><li>Professional driver</li><li>Airport &amp; event trips</li><li>Transparent estimated pricing</li><li>Direct WhatsApp confirmation</li><li>Toll &amp; parking not included in estimate</li></ul></div>
   <div class="logo-card"><img src="assets/logo.webp" width="900" height="541" alt="Privaro logo. Private Ride. Personal Driver."></div>
@@ -36,12 +36,35 @@
   <button class="card" data-service="Private Trip"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><b>Private Trip</b><span>Personal point-to-point transportation.</span></button>
 </div></section>
 
+<section id="packages" class="band"><div class="wrap">
+  <h2>PRIVATE CAR + Driver PACKAGE</h2>
+  <div class="cards" id="pkgCards"></div>
+  <p class="note strong">*We serve locations in Jakarta, Bekasi, Depok, and Tangerang. The area limit for the farthest locations is: Karawang, Cisarua, and Banten.</p>
+  <div id="pkgBook" class="narrow pkgbook" hidden>
+    <h3>Book a package</h3>
+    <form id="pkgForm" novalidate>
+      <label for="pk-package">Package *</label><select id="pk-package" aria-describedby="pe-package"><option value="">Choose a package</option></select><p class="err" id="pe-package" role="alert"></p>
+      <dl id="pkgSummary" class="panel"></dl>
+      <label for="pk-name">Full Name *</label><input id="pk-name" autocomplete="name" aria-describedby="pe-name"><p class="err" id="pe-name" role="alert"></p>
+      <label for="pk-whatsapp">WhatsApp Number *</label><input id="pk-whatsapp" type="tel" inputmode="tel" placeholder="08123456789" autocomplete="tel" aria-describedby="pe-whatsapp"><p class="err" id="pe-whatsapp" role="alert"></p>
+      <div class="two"><div><label for="pk-date">Pickup Date *</label><input id="pk-date" type="date" aria-describedby="pe-date"><p class="err" id="pe-date" role="alert"></p></div>
+      <div><label for="pk-time">Pickup Time *</label><input id="pk-time" type="time" aria-describedby="pe-time"><p class="err" id="pe-time" role="alert"></p></div></div>
+      <label for="pk-pickup">Pickup Location *</label><input id="pk-pickup" placeholder="e.g., Jl. Petogogan, South Jakarta" autocomplete="off" aria-describedby="pe-pickup"><p class="err" id="pe-pickup" role="alert"></p>
+      <label for="pk-passengers">Number of Passengers *</label><input id="pk-passengers" type="number" min="1" value="1" inputmode="numeric" aria-describedby="pe-passengers"><p class="err" id="pe-passengers" role="alert"></p>
+      <label for="pk-notes">Additional Notes</label><textarea id="pk-notes" rows="3" maxlength="500" placeholder="Example: planned destinations, number of stops, special requests."></textarea>
+      <p class="err form" id="pe-form" role="alert"></p>
+      <button class="btn block wa" type="submit">SEND PACKAGE BOOKING TO WHATSAPP</button>
+      <p class="note">Availability and final details are confirmed by the driver via WhatsApp.</p>
+    </form>
+  </div>
+</div></section>
+
 <section id="vehicle" class="wrap sec"><div class="vehicle">
   <img src="assets/car.webp" width="1200" height="675" loading="lazy" alt="White Toyota Calya used by Privaro on a Jakarta main road">
   <div><h2>Your vehicle</h2>
     <p class="vname">Toyota Calya (New) 2026</p>
     <ul class="specs"><li>7 seater</li><li>Comfortable</li><li>Clean</li></ul>
-    <p class="muted">Private vehicle with a professional driver for every trip.</p></div>
+    <p class="muted">The same private vehicle with a professional driver for every trip.</p></div>
 </div></section>
 
 <section id="booking" class="band"><div class="wrap narrow">
@@ -59,7 +82,7 @@
       <div class="seg" role="radiogroup" aria-label="Trip type *"><label><input type="radio" name="tripType" value="one-way" checked><span>One Way</span></label><label><input type="radio" name="tripType" value="round-trip"><span>Round Trip</span></label></div>
       <div class="two"><div><label for="date">Pickup Date *</label><input id="date" type="date" aria-describedby="e-date"><p class="err" id="e-date" role="alert"></p></div>
       <div><label for="time">Pickup Time *</label><input id="time" type="time" aria-describedby="e-time"><p class="err" id="e-time" role="alert"></p></div></div>
-      <p class="locnote" id="h-loc"><b>Note:</b> Please just write the general address (e.g., Jl. Petogogan, South Jakarta); you can provide the exact location via WhatsApp after you submit the form.</p>
+      <p class="locnote" id="h-loc"><b>Note:</b> Please just write the general address (e.g., Jl. Petogogan, South Jakarta); you can provide the exact location via WhatsApp.</p>
       <label for="pickup">Pickup Location *</label><input id="pickup" placeholder="e.g., Jl. Petogogan, South Jakarta" autocomplete="off" aria-describedby="h-loc e-pickup"><p class="err" id="e-pickup" role="alert"></p>
       <label for="destination">Destination *</label><input id="destination" placeholder="e.g., Soekarno-Hatta Airport, Tangerang" autocomplete="off" aria-describedby="h-loc e-destination"><p class="err" id="e-destination" role="alert"></p>
       <div class="two"><div><label for="passengers">Number of Passengers *</label><input id="passengers" type="number" min="1" value="1" inputmode="numeric" aria-describedby="e-passengers"><p class="err" id="e-passengers" role="alert"></p></div>
@@ -105,5 +128,6 @@
 <script src="js/services/routingService.js"></script>
 <script src="js/services/whatsappService.js"></script>
 <script src="js/app.js"></script>
+<script src="js/packages.js"></script>
 </body>
 </html>
