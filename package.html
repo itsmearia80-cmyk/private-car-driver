@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>PRIVATE CAR + Driver PACKAGE | Privaro</title>
+<meta name="description" content="Private car with driver packages for 6, 12 or 24 hours with included kilometers. Book via WhatsApp.">
+<meta property="og:title" content="PRIVATE CAR + Driver PACKAGE | Privaro">
+<meta property="og:description" content="Private car with driver packages for 6, 12 or 24 hours with included kilometers. Book via WhatsApp.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="Privaro, home"><img class="logo" src="assets/logo-header.webp" width="360" height="216" alt="Privaro. Private Ride. Personal Driver."></a>
+  <nav aria-label="Main"><a href="index.html">Home</a><a href="package.html" aria-current="page">Packages</a><a class="btn sm" href="book.html">Book a ride</a></nav>
+</div></header>
+<main><section class="band pagesec"><div class="wrap">
+  <a class="back" href="index.html">&larr; Back to home</a>
+  <h1 class="ph">PRIVATE CAR + Driver PACKAGE</h1>
+  <div class="cards" id="pkgCards"></div>
+  <p class="note strong">*We serve locations in Jakarta, Bekasi, Depok, and Tangerang. The area limit for the farthest locations is: Karawang, Cisarua, and Banten.</p>
+  <div id="pkgBook" class="narrow pkgbook" hidden>
+    <h3>Book a package</h3>
+    <form id="pkgForm" novalidate>
+      <label for="pk-package">Package *</label><select id="pk-package" aria-describedby="pe-package"><option value="">Choose a package</option></select><p class="err" id="pe-package" role="alert"></p>
+      <dl id="pkgSummary" class="panel"></dl>
+      <label for="pk-name">Full Name *</label><input id="pk-name" autocomplete="name" aria-describedby="pe-name"><p class="err" id="pe-name" role="alert"></p>
+      <label for="pk-whatsapp">WhatsApp Number *</label><input id="pk-whatsapp" type="tel" inputmode="tel" placeholder="08123456789" autocomplete="tel" aria-describedby="pe-whatsapp"><p class="err" id="pe-whatsapp" role="alert"></p>
+      <div class="two"><div><label for="pk-date">Pickup Date *</label><input id="pk-date" type="date" aria-describedby="pe-date"><p class="err" id="pe-date" role="alert"></p></div>
+      <div><label for="pk-time">Pickup Time *</label><input id="pk-time" type="time" aria-describedby="pe-time"><p class="err" id="pe-time" role="alert"></p></div></div>
+      <label for="pk-pickup">Pickup Location *</label><input id="pk-pickup" placeholder="e.g., Jl. Petogogan, South Jakarta" autocomplete="off" aria-describedby="pe-pickup"><p class="err" id="pe-pickup" role="alert"></p>
+      <label for="pk-passengers">Number of Passengers *</label><input id="pk-passengers" type="number" min="1" value="1" inputmode="numeric" aria-describedby="pe-passengers"><p class="err" id="pe-passengers" role="alert"></p>
+      <label for="pk-notes">Additional Notes</label><textarea id="pk-notes" rows="3" maxlength="500" placeholder="Example: planned destinations, number of stops, special requests."></textarea>
+      <p class="err form" id="pe-form" role="alert"></p>
+      <button class="btn block wa" type="submit">SEND PACKAGE BOOKING TO WHATSAPP</button>
+      <p class="note">Availability and final details are confirmed by the driver via WhatsApp.</p>
+    </form>
+  </div>
+
+  <p class="switch">Need a one-way or round trip priced by distance? <a href="book.html">Book Your Ride &rarr;</a></p>
+</div></section></main>
+<footer class="wrap foot"><b class="brand"><img class="mark" src="assets/mark.png" width="24" height="24" alt=""><span data-brand>Privaro</span></b><span id="fWa"></span><span id="fArea"></span><span id="fHours"></span></footer>
+<script src="js/config.js"></script>
+<script src="js/utils/validation.js"></script>
+<script src="js/services/pricingService.js"></script>
+<script src="js/services/whatsappService.js"></script>
+<script src="js/site.js"></script>
+<script src="js/packages.js"></script>
+</body>
+</html>

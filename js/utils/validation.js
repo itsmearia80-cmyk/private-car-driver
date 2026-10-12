@@ -15,7 +15,6 @@ const Validation = (() => {
     if (!s.name) e.name = "Please enter your full name.";
     if (!s.whatsapp) e.whatsapp = "Please enter your WhatsApp number.";
     else if (!isValidPhone(s.whatsapp)) e.whatsapp = "Please enter a valid Indonesian number, e.g. 08123456789.";
-    if (!s.service) e.service = "Please choose a service.";
     if (!s.date) e.date = "Please select a pickup date.";
     else if (s.date < todayISO()) e.date = "Please select today or a future date.";
     if (!s.time) e.time = "Please select a pickup time.";

@@ -1,9 +1,9 @@
 # Privaro - Private Ride. Personal Driver. (Booking Web V1.1)
-Situs statis (HTML + CSS + JS murni). Tanpa backend atau database.
+Situs statis multi-halaman: `index.html` (landing), `book.html` (Book Your Ride), `package.html` (PRIVATE CAR + Driver PACKAGE). Tanpa backend atau database.
 
 ## Wajib sebelum deploy (`js/config.js`)
 - `whatsapp.driverNumber`: nomor driver, format `628xxxxxxxxxx`.
-- `pricing`: tarif saat ini Rp5.250/km, waiting jam pertama Rp30.000, tambahan Rp15.000/jam.
+- `pricing`: tarif saat ini Rp5.000/km, waiting jam pertama Rp20.000, tambahan Rp10.000/jam.
 - `routing.google.apiKey`: opsional tetapi disarankan. Key HARUS dibatasi HTTP referrer + hanya Routes API. Kosong = langsung memakai OSRM.
 
 ## Routing

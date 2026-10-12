@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Book Your Ride | Privaro</title>
+<meta name="description" content="Book your private ride with Privaro. Enter pickup and destination, get an estimated fare, and confirm via WhatsApp.">
+<meta property="og:title" content="Book Your Ride | Privaro">
+<meta property="og:description" content="Book your private ride with Privaro. Enter pickup and destination, get an estimated fare, and confirm via WhatsApp.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="Privaro, home"><img class="logo" src="assets/logo-header.webp" width="360" height="216" alt="Privaro. Private Ride. Personal Driver."></a>
+  <nav aria-label="Main"><a href="index.html">Home</a><a href="package.html">Packages</a><a class="btn sm" href="book.html" aria-current="page">Book a ride</a></nav>
+</div></header>
+<main><section class="band pagesec"><div class="wrap narrow">
+  <a class="back" href="index.html">&larr; Back to home</a>
+  <h1 class="ph">Book Your Ride</h1>
+  <p class="muted">Tell us where and when you need to go. We'll calculate an estimated fare and confirm your booking via WhatsApp.</p>
+  <p class="callout"><b>Toll &amp; parking are not included</b> in the estimated fare. They are charged on top if applicable, and the final fare is confirmed by the driver.</p>
+  <form id="bookingForm" novalidate>
+    <fieldset><legend>Your information</legend>
+      <label for="name">Full Name *</label><input id="name" autocomplete="name" aria-describedby="e-name"><p class="err" id="e-name" role="alert"></p>
+      <label for="whatsapp">WhatsApp Number *</label><input id="whatsapp" type="tel" inputmode="tel" placeholder="08123456789" autocomplete="tel" aria-describedby="e-whatsapp"><p class="err" id="e-whatsapp" role="alert"></p>
+    </fieldset>
+    <fieldset><legend>Your trip</legend>
+      <div class="seg" role="radiogroup" aria-label="Trip type *"><label><input type="radio" name="tripType" value="one-way" checked><span>One Way</span></label><label><input type="radio" name="tripType" value="round-trip"><span>Round Trip</span></label></div>
+      <div class="two"><div><label for="date">Pickup Date *</label><input id="date" type="date" aria-describedby="e-date"><p class="err" id="e-date" role="alert"></p></div>
+      <div><label for="time">Pickup Time *</label><input id="time" type="time" aria-describedby="e-time"><p class="err" id="e-time" role="alert"></p></div></div>
+      <p class="locnote" id="h-loc"><b>Note:</b> Please just write the general address (e.g., Jl. Petogogan, South Jakarta); you can provide the exact location via WhatsApp.</p>
+      <label for="pickup">Pickup Location *</label><input id="pickup" placeholder="e.g., Jl. Petogogan, South Jakarta" autocomplete="off" aria-describedby="h-loc e-pickup"><p class="err" id="e-pickup" role="alert"></p>
+      <label for="destination">Destination *</label><input id="destination" placeholder="e.g., Soekarno-Hatta Airport, Tangerang" autocomplete="off" aria-describedby="h-loc e-destination"><p class="err" id="e-destination" role="alert"></p>
+      <div class="two"><div><label for="passengers">Number of Passengers *</label><input id="passengers" type="number" min="1" value="1" inputmode="numeric" aria-describedby="e-passengers"><p class="err" id="e-passengers" role="alert"></p></div>
+      <div><label for="waiting">Waiting Time</label><select id="waiting"><option value="0">No Waiting</option><option value="1">1 Hour</option><option value="2">2 Hours</option><option value="3">3 Hours</option><option value="4">4 Hours</option><option value="5">5 Hours</option><option value="6">6 Hours</option></select></div></div>
+      <p class="hint" id="waitHint"></p>
+      <label for="notes">Additional Notes</label><textarea id="notes" rows="3" maxlength="500" placeholder="Example: 2 passengers, airport pickup, flight arrival at 08:30."></textarea>
+    </fieldset>
+    <p class="err form" id="e-form" role="alert"></p>
+    <button class="btn block" id="estimateBtn" type="submit">GET ESTIMATE</button>
+  </form>
+
+  <div id="result" hidden aria-live="polite">
+    <div class="panel"><h3>Your estimate</h3><dl id="estimate"></dl>
+      <p class="note" id="routeNote"></p>
+      <p class="note strong">+ Toll &amp; parking (if applicable) are NOT included in this estimate.</p>
+      <p class="note"><b>ESTIMATED PRICE.</b> Final fare may vary depending on actual route, tolls, parking fees, route changes, waiting time, and other trip conditions. Please confirm the final fare with the driver.</p></div>
+    <div class="panel"><h3>Booking summary</h3><dl id="summary"></dl></div>
+    <button class="btn block wa" id="sendBtn" type="button">SEND BOOKING TO WHATSAPP</button>
+  </div>
+
+  <p class="switch">Prefer a fixed price for 6, 12 or 24 hours? <a href="package.html">See PRIVATE CAR + Driver PACKAGE &rarr;</a></p>
+</div></section></main>
+<footer class="wrap foot"><b class="brand"><img class="mark" src="assets/mark.png" width="24" height="24" alt=""><span data-brand>Privaro</span></b><span id="fWa"></span><span id="fArea"></span><span id="fHours"></span></footer>
+<script src="js/config.js"></script>
+<script src="js/utils/validation.js"></script>
+<script src="js/services/pricingService.js"></script>
+<script src="js/services/googleRoutesProvider.js"></script>
+<script src="js/services/osrmProvider.js"></script>
+<script src="js/services/routingService.js"></script>
+<script src="js/services/whatsappService.js"></script>
+<script src="js/site.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

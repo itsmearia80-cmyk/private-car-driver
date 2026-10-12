@@ -1,6 +1,6 @@
 (() => {
   const $ = (id) => document.getElementById(id), form = $("bookingForm"), rp = PricingService.formatRupiah;
-  const FIELDS = ["name", "whatsapp", "service", "date", "time", "pickup", "destination", "passengers"];
+  const FIELDS = ["name", "whatsapp", "date", "time", "pickup", "destination", "passengers"];
   const MSG_FAIL = "Rute belum dapat dihitung. Silakan cek alamat atau kirim booking langsung via WhatsApp.";
   const MSG_OFFLINE = "Koneksi internet tidak tersedia, jadi rute belum dapat dihitung. Anda tetap bisa mengirim booking via WhatsApp saat koneksi kembali.";
   let route = null, routeKey = "", failMsg = "", busy = false, ready = false;
@@ -12,8 +12,8 @@
     p.textContent = "DEBUG (hanya muncul dengan ?debug=1)\nDomain: " + location.origin + "\nGoogle API key terisi: " + (CONFIG.routing.google.apiKey ? "ya" : "TIDAK") + "\n" + RoutingService.getTrace().join("\n");
   }
   const read = () => ({
-    name: $("name").value.trim(), whatsapp: $("whatsapp").value.trim(), service: $("service").value,
-    tripType: form.tripType.value, date: $("date").value, time: $("time").value,
+    name: $("name").value.trim(), whatsapp: $("whatsapp").value.trim(),
+    tripType: (form.querySelector('input[name="tripType"]:checked') || { value: "one-way" }).value, date: $("date").value, time: $("time").value,
     pickup: $("pickup").value.trim(), destination: $("destination").value.trim(),
     passengers: parseInt($("passengers").value, 10), waitingHours: parseInt($("waiting").value, 10) || 0,
     notes: $("notes").value.trim().slice(0, CONFIG.booking.maxNotesLength)
@@ -40,7 +40,7 @@
     const n = $("routeNote");
     n.textContent = !route ? (failMsg || MSG_FAIL) : route.distanceKm > CONFIG.routing.longTripKm ? "Long-distance trip. Final fare must be confirmed by driver." : "";
     n.className = "note" + (route ? "" : " bad");
-    [["Customer", s.name], ["WhatsApp", s.whatsapp], ["Service", s.service], ["Trip", s.tripType === "round-trip" ? "Round Trip" : "One Way"],
+    [["Customer", s.name], ["WhatsApp", s.whatsapp], ["Trip", s.tripType === "round-trip" ? "Round Trip" : "One Way"],
      ["Pickup Date", WhatsAppService.fmtDate(s.date)], ["Pickup Time", s.time], ["Pickup", s.pickup], ["Destination", s.destination],
      ["Passengers", String(s.passengers)], ["Waiting Time", wait], ["Estimated Fare", fare ? rp(fare.estimatedTotal) : tbc],
      ["Toll / Parking", "Not included"], ...(s.notes ? [["Additional Notes", s.notes]] : [])].forEach(([k, v]) => sum.append(row(k, v)));
@@ -78,16 +78,6 @@
     window.open(WhatsAppService.buildUrl(WhatsAppService.buildMessage(s, route, fareOf(s))), "_blank", "noopener");
   });
 
-  document.querySelectorAll("[data-service]").forEach((c) => c.addEventListener("click", () => {
-    $("service").value = c.dataset.service; if (ready) render(); $("booking").scrollIntoView({ behavior: "smooth" }); $("name").focus({ preventScroll: true });
-  }));
-
-  document.querySelectorAll("[data-brand]").forEach((n) => (n.textContent = CONFIG.business.name));
-  const wa = `https://wa.me/${CONFIG.whatsapp.driverNumber}?text=${encodeURIComponent(`Halo, saya ingin bertanya tentang layanan ${CONFIG.business.name}.`)}`;
-  ["waTop", "waBottom"].forEach((id) => ($(id).href = wa));
-  $("fWa").textContent = "WhatsApp: +" + CONFIG.whatsapp.driverNumber;
-  if (CONFIG.business.operatingArea) $("fArea").textContent = "Operating area: " + CONFIG.business.operatingArea;
-  if (CONFIG.business.serviceHours) $("fHours").textContent = "Service hours: " + CONFIG.business.serviceHours;
   $("waitHint").textContent = `Waiting: first hour ${rp(CONFIG.pricing.firstWaitingHour)}, each additional hour ${rp(CONFIG.pricing.additionalWaitingHour)}.`;
   $("date").min = Validation.todayISO(); $("passengers").max = CONFIG.booking.maxPassengers; $("notes").maxLength = CONFIG.booking.maxNotesLength;
 })();

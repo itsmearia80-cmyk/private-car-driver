@@ -54,3 +54,15 @@ details{border-bottom:1px solid var(--color-border);padding:14px 0}summary{curso
 .pkg h3{margin:0;font-size:1.05rem}.pkg-price{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;margin:4px 0 0;color:var(--color-primary)}.pkg-km{margin:0 0 12px;color:var(--color-muted);font-weight:600}.pkg .btn{margin-top:auto}
 .pkgbook{margin:28px auto 0}#pkgSummary{margin:16px 0 0}
 #packages.band{background:var(--color-background)}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.choice{display:flex;flex-direction:column;gap:10px;background:var(--color-surface);border:2px solid var(--color-border);border-radius:14px;padding:28px;text-decoration:none;transition:border-color .15s,transform .15s}
+.choice:hover,.choice:focus-visible{border-color:var(--color-primary);transform:translateY(-2px)}
+.choice b{font-size:1.4rem;letter-spacing:-.01em}.choice span{color:var(--color-muted)}
+.choice .tag{align-self:flex-start;background:var(--color-accent);color:#17211E;font-weight:700;font-size:.78rem;border-radius:999px;padding:3px 12px}
+.choice .price{color:var(--color-primary);font-weight:800;font-size:1.3rem}.choice .sub{font-size:.9rem}
+.choice .go{margin-top:auto;padding-top:8px;color:var(--color-primary);font-weight:700}
+.card.info{cursor:default}.card.info:hover{border-color:var(--color-border)}
+.pagesec{padding:28px 0 56px}.back{display:inline-block;margin:0 0 12px;font-size:.92rem;color:var(--color-muted);text-decoration:none}
+.ph{font-size:clamp(1.8rem,5vw,2.6rem);margin:0 0 8px;letter-spacing:-.02em}
+.switch{margin:32px 0 0;padding-top:16px;border-top:1px solid var(--color-border);font-size:.95rem;color:var(--color-muted)}.switch a{color:var(--color-primary);font-weight:700}
+.bar nav a[aria-current]:not(.btn){font-weight:700}

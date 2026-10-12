@@ -6,7 +6,7 @@ const WhatsAppService = (() => {
     const na = "Belum dapat dihitung";
     const wait = s.waitingHours ? `${s.waitingHours} jam` : "Tidak ada";
     const L = [`Halo, saya ingin booking ${CONFIG.business.name}.`, "",
-      `Nama: ${s.name}`, `WhatsApp: ${s.whatsapp}`, `Service: ${s.service}`,
+      `Nama: ${s.name}`, `WhatsApp: ${s.whatsapp}`,
       `Tanggal: ${new Date(s.date + "T00:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}`,
       `Jam: ${s.time}`, `Trip: ${s.tripType === "round-trip" ? "Round Trip" : "One Way"}`,
       `Pickup: ${s.pickup}`, `Destination: ${s.destination}`, `Jumlah Penumpang: ${s.passengers}`,
