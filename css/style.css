@@ -66,3 +66,9 @@ details{border-bottom:1px solid var(--color-border);padding:14px 0}summary{curso
 .ph{font-size:clamp(1.8rem,5vw,2.6rem);margin:0 0 8px;letter-spacing:-.02em}
 .switch{margin:32px 0 0;padding-top:16px;border-top:1px solid var(--color-border);font-size:.95rem;color:var(--color-muted)}.switch a{color:var(--color-primary);font-weight:700}
 .bar nav a[aria-current]:not(.btn){font-weight:700}
+.ac{position:relative}
+.ac-list{position:absolute;left:0;right:0;top:100%;z-index:20;margin:4px 0 0;padding:4px;list-style:none;background:#fff;border:1.5px solid var(--color-border);border-radius:var(--r);box-shadow:0 12px 30px rgba(0,0,0,.16);max-height:300px;overflow:auto}
+.ac-opt{padding:10px 12px;border-radius:8px;cursor:pointer}.ac-opt b{display:block;font-size:.95rem}.ac-opt span{display:block;font-size:.82rem;color:var(--color-muted)}
+.ac-opt[aria-selected=true],.ac-opt:hover{background:#E9F1EE}
+.ac-attr{padding:6px 12px;font-size:.72rem;color:var(--color-muted);text-align:right}
+.ac-status{margin:4px 0 0;font-size:.82rem;color:var(--color-muted)}.ac-status:empty{display:none}.ac-status.ok{color:var(--color-success)}

@@ -150,3 +150,10 @@ Buka situs dengan menambahkan `?debug=1` di URL (contoh: `https://nama-situs.wor
 | `google: rute tidak ditemukan` | Google tidak menemukan alamat/rute | Perjelas alamat (nama jalan, kelurahan, kota) |
 
 Jika Google gagal, situs otomatis mencoba OSRM. Jika baris `osrm: GAGAL` juga muncul, layanan gratisnya sedang membatasi/mati, dan tarif tidak akan dihitung.
+
+## Lampiran D - Saran alamat (autocomplete) di Book Your Ride
+
+- Tanpa pengaturan tambahan, saran alamat memakai OpenStreetMap (Photon), gratis dan berfungsi otomatis.
+- Untuk saran yang lebih akurat dari Google: di Google Cloud aktifkan **Places API (New)**, lalu pada *API restrictions* key yang sama tambahkan **Places API (New)** (selain Routes API). Tidak perlu mengubah `config.js`, karena key yang sama dipakai.
+- Jika Places API belum aktif atau key menolak, situs otomatis beralih ke OpenStreetMap tanpa error di layar.
+- Biaya: setiap permintaan saran dari Google ditagih per permintaan. Kode membatasi: minimal 3 huruf, jeda 0,4 detik antar ketikan, maksimal 12 permintaan Google per kunjungan, dan hasil disimpan sementara. Cek harga terkini di halaman harga Google, dan pasang budget alert.

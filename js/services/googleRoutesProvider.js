@@ -1,5 +1,8 @@
 // PRIMARY. Google Routes API (Compute Routes). Hanya meminta distanceMeters + duration (tanpa traffic).
 const GoogleRoutesProvider = (() => {
+  // Titik bisa berupa teks bebas atau saran terpilih: placeId > koordinat > alamat teks.
+  const waypoint = (p) => typeof p === "string" ? { address: p } : p.placeId ? { placeId: p.placeId }
+    : p.lat != null ? { location: { latLng: { latitude: p.lat, longitude: p.lon } } } : { address: p.text };
   async function getRoute(origin, destination) {
     const R = CONFIG.routing, G = R.google;
     if (!G.apiKey) throw new Error("google: apiKey belum diisi");
@@ -8,7 +11,7 @@ const GoogleRoutesProvider = (() => {
       const res = await fetch(G.endpoint, {
         method: "POST", signal: ctl.signal, referrerPolicy: "strict-origin-when-cross-origin",
         headers: { "Content-Type": "application/json", "X-Goog-Api-Key": G.apiKey, "X-Goog-FieldMask": "routes.distanceMeters,routes.duration" },
-        body: JSON.stringify({ origin: { address: origin }, destination: { address: destination },
+        body: JSON.stringify({ origin: waypoint(origin), destination: waypoint(destination),
           travelMode: "DRIVE", routingPreference: "TRAFFIC_UNAWARE", regionCode: "ID", languageCode: "id" })
       });
       if (!res.ok) { // detail hanya untuk console/debug, tidak pernah ke pengguna

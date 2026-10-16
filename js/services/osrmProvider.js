@@ -25,6 +25,7 @@ const OsrmProvider = (() => {
     }
   ];
   async function geocode(q) {
+    if (q && typeof q === "object") { if (q.lat != null && q.lon != null) return { lat: +q.lat, lon: +q.lon }; q = q.text; } // saran OSM sudah punya koordinat
     for (const g of geocoders) {
       try { const hit = await g(q); if (hit) return hit; } catch (e) { console.warn("[osrm] geocoder gagal:", e.message); }
     }

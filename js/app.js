@@ -11,14 +11,18 @@
     let p = $("debug"); if (!p) { p = document.createElement("pre"); p.id = "debug"; p.className = "debug"; $("routeNote").after(p); }
     p.textContent = "DEBUG (hanya muncul dengan ?debug=1)\nDomain: " + location.origin + "\nGoogle API key terisi: " + (CONFIG.routing.google.apiKey ? "ya" : "TIDAK") + "\n" + RoutingService.getTrace().join("\n");
   }
+  const ac = { pickup: Autocomplete.attach($("pickup")), destination: Autocomplete.attach($("destination")) };
+  const place = (text, sel) => (sel ? { text: sel.text, placeId: sel.placeId, lat: sel.lat, lon: sel.lon } : text);
   const read = () => ({
     name: $("name").value.trim(), whatsapp: $("whatsapp").value.trim(),
     tripType: (form.querySelector('input[name="tripType"]:checked') || { value: "one-way" }).value, date: $("date").value, time: $("time").value,
     pickup: $("pickup").value.trim(), destination: $("destination").value.trim(),
     passengers: parseInt($("passengers").value, 10), waitingHours: parseInt($("waiting").value, 10) || 0,
+    pickupSel: ac.pickup.getSelection(), destSel: ac.destination.getSelection(),
     notes: $("notes").value.trim().slice(0, CONFIG.booking.maxNotesLength)
   });
-  const keyOf = (s) => (s.pickup + "|" + s.destination).toLowerCase();
+  const idOf = (sel) => (sel ? sel.placeId || sel.id || "" : "");
+  const keyOf = (s) => (s.pickup + "|" + idOf(s.pickupSel) + "|" + s.destination + "|" + idOf(s.destSel)).toLowerCase();
   const fareOf = (s) => route ? PricingService.calculateFare({ distanceKm: route.distanceKm, tripType: s.tripType, waitingHours: s.waitingHours }) : null;
 
   function showErrors(errs) {
@@ -56,7 +60,7 @@
     if (!navigator.onLine) { route = null; routeKey = ""; failMsg = MSG_OFFLINE; }
     else if (!route || routeKey !== keyOf(s)) {
       route = null; routeKey = "";
-      try { route = await RoutingService.calculateRoute(s.pickup, s.destination); routeKey = keyOf(s); }
+      try { route = await RoutingService.calculateRoute(place(s.pickup, s.pickupSel), place(s.destination, s.destSel)); routeKey = keyOf(s); }
       catch (e) { console.error("[route]", e); route = null; failMsg = MSG_FAIL; }
     }
     showTrace(); $("e-form").textContent = ""; busy = false; btn.disabled = false; btn.textContent = "GET ESTIMATE";
