@@ -1,8 +1,8 @@
 (() => {
   const $ = (id) => document.getElementById(id), form = $("bookingForm"), rp = PricingService.formatRupiah;
   const FIELDS = ["name", "whatsapp", "date", "time", "pickup", "destination", "passengers"];
-  const MSG_FAIL = "Rute belum dapat dihitung. Silakan cek alamat atau kirim booking langsung via WhatsApp.";
-  const MSG_OFFLINE = "Koneksi internet tidak tersedia, jadi rute belum dapat dihitung. Anda tetap bisa mengirim booking via WhatsApp saat koneksi kembali.";
+  const MSG_FAIL = "We couldn't calculate the route yet. Please check the address or send your booking directly via WhatsApp.";
+  const MSG_OFFLINE = "No internet connection, so the route can't be calculated yet. You can still send your booking via WhatsApp once you're back online.";
   let route = null, routeKey = "", failMsg = "", busy = false, ready = false;
 
   const DEBUG = new URLSearchParams(location.search).has("debug"); // tambahkan ?debug=1 di URL untuk melihat penyebab kegagalan routing

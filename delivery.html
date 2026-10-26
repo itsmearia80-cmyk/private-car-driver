@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Delivery | Privaro</title>
+<meta name="description" content="Send documents, parcels and goods door to door with Privaro. Get an estimated fare and confirm via WhatsApp.">
+<meta property="og:title" content="Delivery | Privaro">
+<meta property="og:description" content="Send documents, parcels and goods door to door with Privaro. Get an estimated fare and confirm via WhatsApp.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="Privaro, home"><img class="logo" src="assets/logo-header.webp" width="360" height="216" alt="Privaro. Private Ride. Personal Driver."></a>
+  <nav aria-label="Main"><a href="index.html">Home</a><a href="package.html">Packages</a><a href="delivery.html">Delivery</a><a class="btn sm" href="book.html">Book a ride</a></nav>
+</div></header>
+<main><section class="band pagesec"><div class="wrap narrow">
+  <a class="back" href="index.html">&larr; Back to home</a>
+  <nav class="tabs" aria-label="Services"><a href="book.html">Ride</a><a href="package.html">Package</a><a href="delivery.html" aria-current="page">Delivery</a></nav>
+  <h1 class="ph">Delivery</h1>
+  <p class="muted">Send documents, parcels and goods from pickup to drop-off. Tell us what you are sending and where. We will show an estimated fare, then you confirm via WhatsApp.</p>
+  <div class="vstrip"><img src="assets/delivery-car.webp" width="1200" height="900" loading="lazy" alt="Silver Suzuki APV used by Privaro for delivery"><div><b>Suzuki APV</b><span>Your delivery vehicle. Choose the item size below; bigger items are quoted via WhatsApp.</span></div></div>
+  <p class="callout"><b>Toll &amp; parking are not included</b> in the estimated fare. They are charged on top if applicable, and the final fare is confirmed by the driver.</p>
+  <form id="dvForm" novalidate>
+    <fieldset><legend>What are you sending?</legend>
+      <div class="opts" id="sizeOpts" role="radiogroup" aria-label="Item size *" aria-describedby="de-size"></div><p class="err" id="de-size" role="alert"></p>
+      <label for="dl-weight">Approximate Weight *</label><select id="dl-weight" aria-describedby="de-weight"><option value="">Choose weight</option></select><p class="err" id="de-weight" role="alert"></p>
+      <label for="dl-desc">What is the item? *</label><input id="dl-desc" maxlength="120" placeholder="e.g., signed contract, 2 boxes of clothes" aria-describedby="de-desc"><p class="err" id="de-desc" role="alert"></p>
+      <label for="dl-value">Item Value (optional)</label><input id="dl-value" inputmode="numeric" placeholder="e.g., 500000" aria-describedby="dl-vhint"><p class="hint" id="dl-vhint">Helps the driver handle the item with care. Numbers only, in Rupiah.</p>
+      <details class="plain"><summary>Items we cannot carry</summary><ul id="bannedList"></ul><p class="hint">Other items may be declined by the driver.</p></details>
+      <label class="check"><input type="checkbox" id="dl-confirm" aria-describedby="de-confirm"> <span>I confirm that my item is not on the list of items we cannot carry.</span></label><p class="err" id="de-confirm" role="alert"></p>
+    </fieldset>
+    <fieldset><legend>Pickup &amp; drop-off</legend>
+      <div class="seg" role="radiogroup" aria-label="Trip type *"><label><input type="radio" name="tripType" value="one-way" checked><span>One Way</span></label><label><input type="radio" name="tripType" value="round-trip"><span>Round Trip</span></label></div>
+      <p class="hint">Round Trip: the driver returns to the pickup point, for example to bring signed documents back.</p>
+      <div class="two"><div><label for="dl-date">Pickup Date *</label><input id="dl-date" type="date" aria-describedby="de-date"><p class="err" id="de-date" role="alert"></p></div>
+      <div><label for="dl-time">Pickup Time *</label><input id="dl-time" type="time" aria-describedby="de-time"><p class="err" id="de-time" role="alert"></p></div></div>
+      <p class="locnote"><b>Note:</b> Start typing and choose a suggestion from the list for the most accurate estimate. If your exact spot is not listed, just write the general address (e.g., Jl. Petogogan, South Jakarta); you can provide the exact location via WhatsApp.</p>
+      <label for="dl-pickup">Pickup Location *</label><input id="dl-pickup" placeholder="e.g., Jl. Petogogan, South Jakarta" autocomplete="off" aria-describedby="de-pickup"><p class="err" id="de-pickup" role="alert"></p>
+      <label for="dl-dropoff">Drop-off Location *</label><input id="dl-dropoff" placeholder="e.g., Soekarno-Hatta Airport, Tangerang" autocomplete="off" aria-describedby="de-dropoff"><p class="err" id="de-dropoff" role="alert"></p>
+    </fieldset>
+    <fieldset><legend>Contacts</legend>
+      <label for="dl-name">Your Name *</label><input id="dl-name" autocomplete="name" aria-describedby="de-name"><p class="err" id="de-name" role="alert"></p>
+      <label for="dl-whatsapp">Your WhatsApp Number *</label><input id="dl-whatsapp" type="tel" inputmode="tel" placeholder="08123456789" autocomplete="tel" aria-describedby="de-whatsapp"><p class="err" id="de-whatsapp" role="alert"></p>
+      <label for="dl-rname">Recipient Name *</label><input id="dl-rname" aria-describedby="de-rname"><p class="err" id="de-rname" role="alert"></p>
+      <label for="dl-rphone">Recipient Phone Number *</label><input id="dl-rphone" type="tel" inputmode="tel" placeholder="08123456789" aria-describedby="de-rphone"><p class="err" id="de-rphone" role="alert"></p>
+      <label for="dl-notes">Additional Notes</label><textarea id="dl-notes" rows="3" maxlength="500" placeholder="Example: call the recipient on arrival, leave with the security guard."></textarea>
+    </fieldset>
+    <p class="hint" id="dl-hint"></p>
+    <p class="err form" id="de-form" role="alert"></p>
+    <button class="btn block" id="dv-btn" type="submit">GET ESTIMATE</button>
+  </form>
+  <div id="dv-result" hidden aria-live="polite">
+    <div class="panel" id="dv-estPanel"><h3>Your estimate</h3><dl id="dv-estimate"></dl>
+      <p class="note strong">+ Toll &amp; parking (if applicable) are NOT included in this estimate.</p>
+      <p class="note"><b>ESTIMATED PRICE.</b> Final fare may vary depending on actual route, tolls, parking fees, route changes, waiting time, and other trip conditions. Please confirm the final fare with the driver.</p></div>
+    <p class="note" id="dv-note"></p>
+    <div class="panel"><h3>Request summary</h3><dl id="dv-summary"></dl></div>
+    <button class="btn block wa" id="dv-send" type="button">SEND REQUEST TO WHATSAPP</button>
+  </div>
+</div></section></main>
+<footer class="wrap foot"><b class="brand"><img class="mark" src="assets/mark.png" width="24" height="24" alt=""><span data-brand>Privaro</span></b><span id="fWa"></span><span id="fArea"></span><span id="fHours"></span></footer>
+<script src="js/config.js"></script>
+<script src="js/utils/validation.js"></script>
+<script src="js/services/pricingService.js"></script>
+<script src="js/services/googleRoutesProvider.js"></script>
+<script src="js/services/osrmProvider.js"></script>
+<script src="js/services/routingService.js"></script>
+<script src="js/services/whatsappService.js"></script>
+<script src="js/services/placesService.js"></script>
+<script src="js/components/autocomplete.js"></script>
+<script src="js/site.js"></script>
+<script src="js/delivery-pricing.js"></script>
+<script src="js/delivery.js"></script>
+</body>
+</html>

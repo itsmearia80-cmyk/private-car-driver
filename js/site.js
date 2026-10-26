@@ -10,7 +10,7 @@
   if (CONFIG.business.serviceHours) set("fHours", "Service hours: " + CONFIG.business.serviceHours);
   document.querySelectorAll("[data-fill]").forEach((e) => {
     const k = e.dataset.fill;
-    e.textContent = k === "perKm" ? `${rp(P.pricePerKm)} per km`
+    e.textContent = k === "delivery" ? (typeof DELIVERY !== "undefined" ? `Minimum fare ${rp(DELIVERY.minFare)}. Toll & parking not included.` : "") : k === "perKm" ? `${rp(P.pricePerKm)} per km`
       : k === "waiting" ? `Waiting time: ${rp(P.firstWaitingHour)} for the first hour, then ${rp(P.additionalWaitingHour)} per additional hour. Toll & parking not included.` : "";
   });
 })();

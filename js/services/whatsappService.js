@@ -8,7 +8,7 @@ const WhatsAppService = (() => {
     const wait = s.waitingHours ? `${s.waitingHours} jam` : "Tidak ada";
     const L = [`Halo, saya ingin booking ${CONFIG.business.name}.`, "",
       `Nama: ${s.name}`, `WhatsApp: ${s.whatsapp}`,
-      `Tanggal: ${new Date(s.date + "T00:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}`,
+      `Tanggal: ${new Date(s.date + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`,
       `Jam: ${s.time}`, `Trip: ${s.tripType === "round-trip" ? "Round Trip" : "One Way"}`,
       ...pin("Pickup", s.pickup, s.pickupSel), ...pin("Destination", s.destination, s.destSel), `Jumlah Penumpang: ${s.passengers}`,
       `Jarak Estimasi: ${route ? fmtKm(route.distanceKm) + " km (satu arah)" : na}`,
