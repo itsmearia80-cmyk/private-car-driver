@@ -22,5 +22,5 @@ Google Routes API (primary) lalu OSRM (fallback), dengan objek hasil yang seraga
 ## Delivery service
 - Page: `delivery.html` (UI in `js/delivery.js`). Prices, size classes, weight options and the banned-items list live in `js/delivery-pricing.js` (config.js is not touched).
 - Formula: `max(minFare, baseFare + distance x pricePerKm) + size surcharge`. Round trip doubles the distance. Items marked "bigger than Large" or over 30 kg get a custom quote via WhatsApp (no route call).
-- Current values are the owner's confirmed starting values: Rp5.000/km, minimum fare Rp40.000, surcharges Rp0 / Rp0 / Rp15.000 / Rp35.000. Size limits and the banned list are provisional.
+- Current values are the owner's confirmed starting values: Rp5.000/km, minimum fare Rp40.000, size surcharges Document Rp0, Small Rp0, Medium Rp0, Large Rp25.000. Size limits and the banned list are provisional.
 - Tests: `node tests-delivery.js` (formula), `node tests-ui.js` (needs jsdom).

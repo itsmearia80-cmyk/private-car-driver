@@ -7,8 +7,8 @@ const DELIVERY = {
   sizes: [
     { id: "document", name: "Document / envelope", hint: "Up to A4 size, about 1 kg", surcharge: 0 },
     { id: "small", name: "Small parcel", hint: "About a shoebox, up to 5 kg", surcharge: 0 },
-    { id: "medium", name: "Medium box", hint: "Up to about 60 x 45 x 45 cm, 15 kg", surcharge: 15000 },
-    { id: "large", name: "Large item", hint: "Up to about 100 x 60 x 60 cm, 30 kg", surcharge: 35000 },
+    { id: "medium", name: "Medium box", hint: "Up to about 60 x 45 x 45 cm, 15 kg", surcharge: 0 },
+    { id: "large", name: "Large item", hint: "Up to about 100 x 60 x 60 cm, 30 kg", surcharge: 25000 },
     { id: "oversize", name: "Bigger than Large", hint: "Needs a custom quote", surcharge: 0, quote: true }
   ],
   weights: [

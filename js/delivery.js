@@ -125,5 +125,6 @@
     window.open(WhatsAppService.buildUrl(message(s, quote ? null : fareOf(s), quote)), "_blank", "noopener");
   });
   $("dl-date").min = Validation.todayISO(); $("dl-notes").maxLength = CONFIG.booking.maxNotesLength;
-  $("dl-hint").textContent = `Minimum fare ${rp(DELIVERY.minFare)}. Medium and large items have a small surcharge.`;
+  const sur = DELIVERY.sizes.filter((z) => z.surcharge > 0).map((z) => `${z.name} (+${rp(z.surcharge)})`);
+  $("dl-hint").textContent = `Minimum fare ${rp(DELIVERY.minFare)}.` + (sur.length ? ` Surcharge: ${sur.join(", ")}.` : "");
 })();

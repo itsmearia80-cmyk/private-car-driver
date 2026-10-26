@@ -6,11 +6,11 @@ t("10 km, small = Rp50.000 (above minimum)", F(10, "one-way", "small").estimated
 t("3 km, small = minimum Rp40.000", [F(3, "one-way", "small").estimatedTotal, F(3, "one-way", "small").minApplied], [40000, true]);
 t("10 km, no minimum flag", F(10, "one-way", "small").minApplied, false);
 t("3 km round trip (6 km = 30.000) -> minimum", F(3, "round-trip", "document").estimatedTotal, 40000);
-t("10 km, medium = 50.000 + 15.000", F(10, "one-way", "medium").estimatedTotal, 65000);
-t("3 km, medium = minimum 40.000 + 15.000", F(3, "one-way", "medium").estimatedTotal, 55000);
-t("25 km, large = 125.000 + 35.000", F(25, "one-way", "large").estimatedTotal, 160000);
-t("25 km round trip, large = 250.000 + 35.000", F(25, "round-trip", "large").estimatedTotal, 285000);
-t("document and small have no surcharge", [F(10, "one-way", "document").surcharge, F(10, "one-way", "small").surcharge], [0, 0]);
+t("10 km, medium = 50.000 (no surcharge)", F(10, "one-way", "medium").estimatedTotal, 50000);
+t("3 km, medium = minimum 40.000 (no surcharge)", F(3, "one-way", "medium").estimatedTotal, 40000);
+t("25 km, large = 125.000 + 25.000", F(25, "one-way", "large").estimatedTotal, 150000);
+t("25 km round trip, large = 250.000 + 25.000", F(25, "round-trip", "large").estimatedTotal, 275000);
+t("document, small and medium have no surcharge; large Rp25.000", ["document", "small", "medium", "large"].map((z) => F(10, "one-way", z).surcharge), [0, 0, 0, 25000]);
 t("fractional distance rounds the cost: 8.4 km", F(8.4, "one-way", "small").distanceCost, 42000);
 t("oversize needs a quote", P.needsQuote("oversize", "w1"), true);
 t("over 30 kg needs a quote", P.needsQuote("small", "wmax"), true);
