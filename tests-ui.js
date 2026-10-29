@@ -36,6 +36,27 @@ const msgOf = (w) => decodeURIComponent((w.__o[0] || "").split("text=")[1] || ""
   $("sendBtn").click(); const m = msgOf(w);
   ok("book: WhatsApp to 6281573011713, fare + round trip, no Service line", (w.__o[0] || "").startsWith("https://wa.me/6281573011713") && /Rp120\.000/.test(m) && /Round Trip/.test(m) && !/Service:/.test(m));
   w.close();
+  // BOOK: sampai 2 destinasi
+  const legStub = async (u) => u.includes("nominatim") ? js([{ lat: "-6.2", lon: "106.8" }]) : u.includes("photon") ? js({ features: [] })
+    : js({ code: "Ok", routes: [{ distance: 0, legs: Array.from({ length: u.split("/driving/")[1].split("?")[0].split(";").length - 1 }, (_, i) => ({ distance: [5000, 7000, 6000][i], duration: 600 })) }] });
+  w = await load(dir, "book.html", legStub); d = w.document; $ = (i) => d.getElementById(i); w.eval("CONFIG.routing.osrm.minGapMs = 0");
+  ok("ride: 2nd destination hidden at start, add button shown", $("stop2").hidden && !$("addStop").hidden && $("lbl-dest").textContent === "Destination *");
+  $("addStop").click();
+  ok("ride: add -> 2nd destination visible, label becomes Destination 1", !$("stop2").hidden && $("addStop").hidden && $("lbl-dest").textContent === "Destination 1 *");
+  $("name").value = "Budi"; $("whatsapp").value = "08123456789"; $("date").value = "2099-01-01"; $("time").value = "08:00"; $("pickup").value = "Petogogan"; $("destination").value = "Bekasi";
+  $("bookingForm").dispatchEvent(new w.Event("submit", { cancelable: true }));
+  ok("ride: empty 2nd destination is rejected", $("result").hidden && /second destination/.test($("e-destination2").textContent));
+  $("destination2").value = "bekasi"; $("bookingForm").dispatchEvent(new w.Event("submit", { cancelable: true }));
+  ok("ride: destination 2 equal to destination 1 is rejected", $("result").hidden && /appear to be the same/.test($("e-destination2").textContent));
+  $("destination2").value = "Depok"; $("bookingForm").dispatchEvent(new w.Event("submit", { cancelable: true })); for (let i = 0; i < 40 && $("result").hidden; i++) await wait(50);
+  ok("ride: 2 destinations one way = 12 km x Rp5.000 = Rp60.000", !$("result").hidden && /Rp60\.000/.test($("estimate").textContent) && /2 destinations/.test($("estimate").textContent));
+  d.querySelector('input[value="round-trip"]').checked = true; $("bookingForm").dispatchEvent(new w.Event("input", { bubbles: true }));
+  ok("ride: round trip uses the real return leg (12 + 6 km = Rp90.000, not 2x)", /Rp90\.000/.test($("estimate").textContent) && /Return to pickup/.test($("estimate").textContent));
+  $("sendBtn").click(); const m4 = msgOf(w);
+  ok("ride: WhatsApp message lists Destination 1, Destination 2 and the return distance", /Destination 1: Bekasi/.test(m4) && /Destination 2: Depok/.test(m4) && /kembali 6 km/.test(m4) && /Rp90\.000/.test(m4));
+  $("removeStop").click();
+  ok("ride: removing destination 2 clears it and invalidates the old estimate", $("stop2").hidden && $("destination2").value === "" && $("result").hidden && $("lbl-dest").textContent === "Destination *");
+  w.close();
   // BOOK + AUTOCOMPLETE
   w = await load(dir, "book.html", stub); d = w.document; $ = (i) => d.getElementById(i); w.eval("CONFIG.routing.osrm.minGapMs = 0");
   const type = (el, v) => { el.value = v; el.dispatchEvent(new w.Event("input", { bubbles: true })); };

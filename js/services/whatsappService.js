@@ -10,8 +10,8 @@ const WhatsAppService = (() => {
       `Nama: ${s.name}`, `WhatsApp: ${s.whatsapp}`,
       `Tanggal: ${new Date(s.date + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`,
       `Jam: ${s.time}`, `Trip: ${s.tripType === "round-trip" ? "Round Trip" : "One Way"}`,
-      ...pin("Pickup", s.pickup, s.pickupSel), ...pin("Destination", s.destination, s.destSel), `Jumlah Penumpang: ${s.passengers}`,
-      `Jarak Estimasi: ${route ? fmtKm(route.distanceKm) + " km (satu arah)" : na}`,
+      ...pin("Pickup", s.pickup, s.pickupSel), ...pin(s.destination2 ? "Destination 1" : "Destination", s.destination, s.destSel), ...(s.destination2 ? pin("Destination 2", s.destination2, s.dest2Sel) : []), `Jumlah Penumpang: ${s.passengers}`,
+      `Jarak Estimasi: ${route ? fmtKm(route.distanceKm) + " km (satu arah)" + (s.destination2 && s.tripType === "round-trip" && route.returnKm != null ? " + kembali " + fmtKm(route.returnKm) + " km" : "") : na}`,
       `Waiting: ${wait}`, `Estimasi Tarif: ${fare ? PricingService.formatRupiah(fare.estimatedTotal) : na}`,
       "Tol/Parkir: tidak termasuk estimasi",
       `Dihitung dengan: ${route ? PROVIDER[route.provider] || route.provider : "-"}`];

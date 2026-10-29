@@ -44,5 +44,20 @@ const OsrmProvider = (() => {
     }
     throw last || new Error("osrm: no route");
   }
-  return { getRoute };
+  async function getLegs(points) {
+    const n = points.length, first = await geocode(points[0]), coords = [first]; // berurutan; titik akhir yang sama dengan asal tidak di-geocode ulang
+    for (let i = 1; i < n - 1; i++) coords.push(await geocode(points[i]));
+    coords.push(points[n - 1] === points[0] ? first : await geocode(points[n - 1]));
+    const path = coords.map((c) => c.lon + "," + c.lat).join(";"); let last;
+    for (const base of R().routerUrls) {
+      try {
+        const d = await getJSON(`${base}/${path}?overview=false`), legs = d.routes && d.routes[0] && d.routes[0].legs;
+        if (d.code === "Ok" && legs && legs.length === n - 1)
+          return { legsKm: legs.map((l) => l.distance / 1000), legsMin: legs.map((l) => Math.round(l.duration / 60)), provider: "osrm", status: "success" };
+        last = new Error("osrm: code " + d.code + " / rincian rute tidak lengkap");
+      } catch (e) { last = e; console.warn("[osrm] router gagal:", e.message); }
+    }
+    throw last || new Error("osrm: no route");
+  }
+  return { getRoute, getLegs };
 })();

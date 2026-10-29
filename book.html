@@ -36,7 +36,13 @@
       <div><label for="time">Pickup Time *</label><input id="time" type="time" aria-describedby="e-time"><p class="err" id="e-time" role="alert"></p></div></div>
       <p class="locnote" id="h-loc"><b>Note:</b> Start typing and choose a suggestion from the list for the most accurate estimate. If your exact spot is not listed, just write the general address (e.g., Jl. Petogogan, South Jakarta); you can provide the exact location via WhatsApp.</p>
       <label for="pickup">Pickup Location *</label><input id="pickup" placeholder="e.g., Jl. Petogogan, South Jakarta" autocomplete="off" aria-describedby="h-loc e-pickup"><p class="err" id="e-pickup" role="alert"></p>
-      <label for="destination">Destination *</label><input id="destination" placeholder="e.g., Soekarno-Hatta Airport, Tangerang" autocomplete="off" aria-describedby="h-loc e-destination"><p class="err" id="e-destination" role="alert"></p>
+      <label for="destination" id="lbl-dest">Destination *</label><input id="destination" placeholder="e.g., Soekarno-Hatta Airport, Tangerang" autocomplete="off" aria-describedby="h-loc e-destination"><p class="err" id="e-destination" role="alert"></p>
+      <div id="stop2" hidden>
+        <label for="destination2">Destination 2 *</label><input id="destination2" placeholder="e.g., Grand Indonesia, Central Jakarta" autocomplete="off" aria-describedby="e-destination2"><p class="err" id="e-destination2" role="alert"></p>
+        <button type="button" class="linkbtn" id="removeStop">Remove destination 2</button>
+      </div>
+      <button type="button" class="btn ghost sm addstop" id="addStop" aria-controls="stop2" aria-expanded="false">+ Add another destination</button>
+      <p class="hint">Up to 2 destinations. Stops are visited in the order you enter them. A Round Trip returns to the pickup point.</p>
       <div class="two"><div><label for="passengers">Number of Passengers *</label><input id="passengers" type="number" min="1" value="1" inputmode="numeric" aria-describedby="e-passengers"><p class="err" id="e-passengers" role="alert"></p></div>
       <div><label for="waiting">Waiting Time</label><select id="waiting"><option value="0">No Waiting</option><option value="1">1 Hour</option><option value="2">2 Hours</option><option value="3">3 Hours</option><option value="4">4 Hours</option><option value="5">5 Hours</option><option value="6">6 Hours</option></select></div></div>
       <p class="hint" id="waitHint"></p>

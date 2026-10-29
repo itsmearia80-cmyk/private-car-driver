@@ -1,14 +1,15 @@
 const PricingService = (() => {
-  const billableDistance = (km, tripType) => (tripType === "round-trip" ? km * 2 : km);
-  const calculateDistanceCost = (km, tripType) =>
-    Math.round(billableDistance(km, tripType) * CONFIG.pricing.pricePerKm);
+  // returnKm opsional: jarak kembali sebenarnya (perjalanan beberapa tujuan). Tanpa returnKm, pulang-pergi = 2x jarak (aturan awal).
+  const billableDistance = (km, tripType, returnKm) => (tripType === "round-trip" ? km + (returnKm != null ? returnKm : km) : km);
+  const calculateDistanceCost = (km, tripType, returnKm) =>
+    Math.round(billableDistance(km, tripType, returnKm) * CONFIG.pricing.pricePerKm);
   const calculateWaitingCost = (h) =>
     h <= 0 ? 0 : CONFIG.pricing.firstWaitingHour + (h - 1) * CONFIG.pricing.additionalWaitingHour;
   const calculateTotalFare = (distanceCost, waitingCost) => distanceCost + waitingCost;
-  function calculateFare({ distanceKm, tripType, waitingHours }) {
-    const distanceCost = calculateDistanceCost(distanceKm, tripType);
+  function calculateFare({ distanceKm, returnKm, tripType, waitingHours }) {
+    const distanceCost = calculateDistanceCost(distanceKm, tripType, returnKm);
     const waitingCost = calculateWaitingCost(waitingHours);
-    return { distanceKm, billableDistanceKm: billableDistance(distanceKm, tripType), distanceCost, waitingCost,
+    return { distanceKm, billableDistanceKm: billableDistance(distanceKm, tripType, returnKm), distanceCost, waitingCost,
       estimatedTotal: calculateTotalFare(distanceCost, waitingCost) };
   }
   const formatRupiah = (n) =>

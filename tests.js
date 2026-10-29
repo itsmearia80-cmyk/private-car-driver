@@ -19,3 +19,8 @@ t("phone +62", V.normalizePhone("+628123456789"), "628123456789");
 t("reject abc", V.isValidPhone("abc"), false);
 t("reject 123", V.isValidPhone("123"), false);
 t("past date", !!V.validateBooking({ name:"a", whatsapp:"08123456789", date:"2000-01-01", time:"05:00", pickup:"a", destination:"b", passengers:1 }).date, true);
+// --- perjalanan beberapa tujuan: jarak kembali sebenarnya
+{ const c = (o) => P.calculateFare(Object.assign({ waitingHours: 0 }, o));
+  t("returnKm: round trip = outbound + return (12 + 6 km = Rp90.000)", c({ distanceKm: 12, returnKm: 6, tripType: "round-trip" }).distanceCost, 90000);
+  t("returnKm ignored for one way (12 km = Rp60.000)", c({ distanceKm: 12, returnKm: 6, tripType: "one-way" }).distanceCost, 60000);
+  t("no returnKm: round trip still doubles (10 km = Rp100.000)", c({ distanceKm: 10, tripType: "round-trip" }).distanceCost, 100000); }
