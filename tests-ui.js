@@ -126,11 +126,13 @@ const msgOf = (w) => decodeURIComponent((w.__o[0] || "").split("text=")[1] || ""
   w.close();
   // PACKAGE
   w = await load(dir, "package.html"); d = w.document; $ = (i) => d.getElementById(i);
-  ok("package: 3 cards + area note", d.querySelectorAll("#pkgCards .pkg").length === 3 && /Karawang, Cisarua, and Banten/.test(d.body.textContent));
+  ok("package: 4 cards (3, 6, 12, 24 hours) + area note", d.querySelectorAll("#pkgCards .pkg").length === 4 && /3 Hours Package/.test(d.querySelector("#pkgCards").textContent) && /Rp200\.000/.test(d.querySelector("#pkgCards").textContent) && /Karawang, Cisarua, and Banten/.test(d.body.textContent));
   d.querySelectorAll("#pkgCards .pkg")[0].querySelector("button").click();
   $("pk-name").value = "Sari"; $("pk-whatsapp").value = "08123456789"; $("pk-date").value = "2099-01-01"; $("pk-time").value = "07:00"; $("pk-pickup").value = "Depok"; $("pk-passengers").value = "4";
   $("pkgForm").dispatchEvent(new w.Event("submit", { cancelable: true })); const m2 = msgOf(w);
-  ok("package: WhatsApp has 6 Hours Package, Rp350.000, 60 km", (w.__o[0] || "").startsWith("https://wa.me/6281573011713") && /6 Hours Package/.test(m2) && /Rp350\.000/.test(m2) && /60 km/.test(m2));
+  ok("package: WhatsApp has 3 Hours Package, Rp200.000, 30 km", (w.__o[0] || "").startsWith("https://wa.me/6281573011713") && /3 Hours Package/.test(m2) && /Rp200\.000/.test(m2) && /30 km/.test(m2));
+  w.__o.length = 0; d.querySelectorAll("#pkgCards .pkg")[1].querySelector("button").click(); $("pkgForm").dispatchEvent(new w.Event("submit", { cancelable: true }));
+  ok("package: choosing the 6 Hours card still gives Rp350.000 / 60 km", /6 Hours Package/.test(msgOf(w)) && /Rp350\.000/.test(msgOf(w)) && /60 km/.test(msgOf(w)));
   w.close();
   w.close(); process.exit(bad);
 })();

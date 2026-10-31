@@ -23,7 +23,8 @@ const DeliveryPricing = (() => {
   const weightOf = (id) => DELIVERY.weights.find((w) => w.id === id);
   const needsQuote = (sizeId, weightId) => !!((sizeOf(sizeId) || {}).quote || (weightOf(weightId) || {}).quote);
   function calculate({ distanceKm, tripType, sizeId }) {
-    const size = sizeOf(sizeId), billable = tripType === "round-trip" ? distanceKm * 2 : distanceKm;
+    // Jarak dibulatkan ke 0,1 km sebelum dikali tarif (angka di layar x tarif = biaya yang ditagih).
+    const km = Math.round(distanceKm * 10) / 10, size = sizeOf(sizeId), billable = tripType === "round-trip" ? km * 2 : km;
     const distanceCost = Math.round(billable * DELIVERY.pricePerKm), subtotal = DELIVERY.baseFare + distanceCost;
     const base = Math.max(DELIVERY.minFare, subtotal), surcharge = size ? size.surcharge : 0;
     return { billableDistanceKm: billable, distanceCost, minApplied: DELIVERY.minFare > subtotal, base, surcharge, estimatedTotal: base + surcharge };

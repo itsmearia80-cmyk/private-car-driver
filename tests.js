@@ -24,3 +24,9 @@ t("past date", !!V.validateBooking({ name:"a", whatsapp:"08123456789", date:"200
   t("returnKm: round trip = outbound + return (12 + 6 km = Rp90.000)", c({ distanceKm: 12, returnKm: 6, tripType: "round-trip" }).distanceCost, 90000);
   t("returnKm ignored for one way (12 km = Rp60.000)", c({ distanceKm: 12, returnKm: 6, tripType: "one-way" }).distanceCost, 60000);
   t("no returnKm: round trip still doubles (10 km = Rp100.000)", c({ distanceKm: 10, tripType: "round-trip" }).distanceCost, 100000); }
+// --- jarak dibulatkan 0,1 km sebelum dikali tarif
+{ const c = (o) => P.calculateFare(Object.assign({ waitingHours: 0 }, o));
+  t("rounding: 20.367 km -> 20.4 km x Rp5.000 = Rp102.000 (matches the screen)", c({ distanceKm: 20.367, tripType: "one-way" }).distanceCost, 102000);
+  t("rounding: round trip 20.367 km -> 40.8 km = Rp204.000", c({ distanceKm: 20.367, tripType: "round-trip" }).distanceCost, 204000);
+  t("rounding: outbound 12.04 + return 6.06 -> 12.0 + 6.1 km = Rp90.500", c({ distanceKm: 12.04, returnKm: 6.06, tripType: "round-trip" }).distanceCost, 90500);
+  t("rounding: 20.44 km rounds down to 20.4, 20.45 rounds up to 20.5", [c({ distanceKm: 20.44, tripType: "one-way" }).distanceCost, c({ distanceKm: 20.45, tripType: "one-way" }).distanceCost].join(), "102000,102500"); }

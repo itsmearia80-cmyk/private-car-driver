@@ -1,6 +1,8 @@
 const PricingService = (() => {
   // returnKm opsional: jarak kembali sebenarnya (perjalanan beberapa tujuan). Tanpa returnKm, pulang-pergi = 2x jarak (aturan awal).
-  const billableDistance = (km, tripType, returnKm) => (tripType === "round-trip" ? km + (returnKm != null ? returnKm : km) : km);
+  // Jarak dibulatkan ke 0,1 km SEBELUM dikali tarif, supaya angka yang tampil di layar x tarif = biaya yang ditagih.
+  const r1 = (n) => Math.round(n * 10) / 10;
+  const billableDistance = (km, tripType, returnKm) => (tripType === "round-trip" ? r1(km) + r1(returnKm != null ? returnKm : km) : r1(km));
   const calculateDistanceCost = (km, tripType, returnKm) =>
     Math.round(billableDistance(km, tripType, returnKm) * CONFIG.pricing.pricePerKm);
   const calculateWaitingCost = (h) =>

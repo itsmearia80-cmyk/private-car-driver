@@ -1,6 +1,8 @@
 // Segmen PRIVATE CAR + Driver PACKAGE (terpisah dari booking per-km, tanpa routing/estimasi).
 // Ubah harga / included km di sini; kartu dan pesan WhatsApp otomatis mengikuti.
 const PACKAGES = [
+  // 3 jam: harga dari pemilik; Included KM 30 adalah usulan awal (mengikuti pola 10 km per jam), perlu dikonfirmasi pemilik.
+  { id: "3h", name: "3 Hours Package", price: 200000, includedKm: 30 },
   { id: "6h", name: "6 Hours Package", price: 350000, includedKm: 60 },
   { id: "12h", name: "12 Hours Package", price: 550000, includedKm: 120 },
   { id: "24h", name: "24 Hours Package", price: 750000, includedKm: 200 }

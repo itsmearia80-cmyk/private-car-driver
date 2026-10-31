@@ -16,3 +16,5 @@ t("oversize needs a quote", P.needsQuote("oversize", "w1"), true);
 t("over 30 kg needs a quote", P.needsQuote("small", "wmax"), true);
 t("standard item does not need a quote", P.needsQuote("large", "w30"), false);
 t("every size has an id and a surcharge number", DELIVERY.sizes.every((s) => s.id && typeof s.surcharge === "number"), true);
+t("rounding: 20.367 km small parcel -> 20.4 km x Rp5.000 = Rp102.000", F(20.367, "one-way", "small").distanceCost, 102000);
+t("rounding: round trip 20.367 km -> 40.8 km = Rp204.000", F(20.367, "round-trip", "small").distanceCost, 204000);
