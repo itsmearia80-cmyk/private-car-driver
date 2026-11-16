@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>PRIVARO COMMUTER | Privaro</title>
+<meta name="description" content="Scheduled shared rides with fixed routes and departure times. Reserve your seat and confirm via WhatsApp.">
+<meta property="og:title" content="PRIVARO COMMUTER | Privaro">
+<meta property="og:description" content="Scheduled shared rides with fixed routes and departure times. Reserve your seat and confirm via WhatsApp.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="Privaro, home"><img class="logo" src="assets/logo-header.webp" width="360" height="216" alt="Privaro. Private Ride. Personal Driver."></a>
+  <nav aria-label="Main"><a href="index.html">Home</a><a href="package.html">Packages</a><a href="delivery.html">Delivery</a><a href="commuter.html" aria-current="page">Commuter</a><a class="btn sm" href="book.html">Book a ride</a></nav>
+</div></header>
+<main>
+<section class="band pagesec cmt"><div class="wrap">
+  <a class="back" href="index.html">&larr; Back to home</a>
+  <nav class="tabs" aria-label="Services"><a href="book.html">Ride</a><a href="package.html">Package</a><a href="delivery.html">Delivery</a><a href="commuter.html" aria-current="page">Commuter</a></nav>
+  <h1 class="ph">Your Daily Ride. Your Fixed Schedule.</h1>
+  <p class="lead muted">Skip the hassle of your daily commute. Reserve your seat with PRIVARO COMMUTER.</p>
+  <div class="cta"><a class="btn" id="heroCta" href="#book">Book Your Seat</a></div>
+  <p class="callout" id="closedNote" hidden>PRIVARO COMMUTER is coming soon. Booking is not open yet.</p>
+</div></section>
+
+<section id="routes" class="wrap sec cmt"><h2>Available routes</h2><div class="cards" id="routeCards"></div></section>
+
+<section id="how" class="wrap sec"><h2>How it works</h2>
+<ol class="steps"><li><b>Choose your route</b><span>Select your preferred route and departure date.</span></li><li><b>Reserve your seat</b><span>Enter passenger information and select the number of seats.</span></li><li><b>Confirm your booking</b><span>Continue to WhatsApp for booking confirmation and payment instructions.</span></li></ol></section>
+
+<section id="passes" class="band cmt"><div class="wrap"><h2>Commuter Passes</h2>
+  <p class="muted">Multi-trip passes are route-specific and valid for a set number of days. Each journey uses one credit, there is no unlimited travel, and you still reserve a seat for every trip. Passes are arranged and tracked manually via WhatsApp.</p>
+  <div id="passCards"></div></div></section>
+
+<section id="book" class="wrap sec narrow cmt"><h2>Reserve your seat</h2>
+  <form id="cmForm" novalidate>
+    <label for="cm-route">Route *</label><select id="cm-route" aria-describedby="ce-route"></select><p class="err" id="ce-route" role="alert"></p>
+    <div class="two"><div><label for="cm-date">Travel date *</label><select id="cm-date" aria-describedby="ce-date"></select><p class="err" id="ce-date" role="alert"></p></div>
+    <div><label for="cm-seats">Number of seats *</label><select id="cm-seats" aria-describedby="ce-seats"></select><p class="err" id="ce-seats" role="alert"></p></div></div>
+    <label for="cm-name">Full Name *</label><input id="cm-name" autocomplete="name" aria-describedby="ce-name"><p class="err" id="ce-name" role="alert"></p>
+    <label for="cm-whatsapp">WhatsApp Number *</label><input id="cm-whatsapp" type="tel" inputmode="tel" placeholder="08123456789" autocomplete="tel" aria-describedby="ce-whatsapp"><p class="err" id="ce-whatsapp" role="alert"></p>
+    <label for="cm-notes">Notes (optional)</label><textarea id="cm-notes" rows="3" maxlength="500"></textarea>
+    <dl id="cmFare" class="panel"></dl>
+    <p class="err form" id="ce-form" role="alert"></p>
+    <button class="btn block wa" type="submit">RESERVE VIA WHATSAPP</button>
+    <p class="note strong">Your seat is subject to confirmation by PRIVARO.</p>
+    <p class="note" id="cmSent" role="status"></p>
+  </form></section>
+
+<section id="faq" class="wrap sec narrow"><h2>FAQ</h2>
+<details><summary>Do I need to reserve in advance?</summary><p>Yes. Reserve your seat before the departure; bookings close <span data-cutoff></span> hours before departure. Your seat is subject to confirmation by PRIVARO on WhatsApp.</p></details>
+<details><summary>How many passengers can travel?</summary><p>Seats on each departure are limited. Availability is confirmed by PRIVARO on WhatsApp before your booking is final.</p></details>
+<details><summary>What happens if the minimum number of passengers is not reached?</summary><p>If a departure cannot run, PRIVARO will tell you on WhatsApp before departure and agree the options with you.</p></details>
+<details><summary>Can I cancel my reservation?</summary><p>Message PRIVARO on WhatsApp as early as possible with your booking reference. Cancellation terms are confirmed when your booking is accepted.</p></details>
+<details><summary>Can I purchase multiple trips?</summary><p>Yes, see Commuter Passes above. Passes are route-specific and arranged via WhatsApp.</p></details>
+<details><summary>How do I confirm my payment?</summary><p>After PRIVARO confirms your seat on WhatsApp, you receive payment instructions there. A booking is not confirmed or paid just because you sent the WhatsApp message.</p></details>
+<details><summary>Where exactly is the pickup point?</summary><p>The pickup area is shown on each route. The exact point is shared when your booking is confirmed.</p></details>
+</section>
+
+<section class="band dark"><div class="wrap cta2"><h2>Ready for a Better Daily Commute?</h2><a class="btn" id="waBottom" href="#" target="_blank" rel="noopener">Reserve Your Seat via WhatsApp</a></div></section>
+</main>
+<footer class="wrap foot"><b class="brand"><img class="mark" src="assets/mark.png" width="24" height="24" alt=""><span data-brand>Privaro</span></b><span id="fWa"></span><span id="fArea"></span><span id="fHours"></span></footer>
+<script src="js/config.js"></script>
+<script src="js/utils/validation.js"></script>
+<script src="js/services/pricingService.js"></script>
+<script src="js/services/whatsappService.js"></script>
+<script src="js/site.js"></script>
+<script src="js/commuter-config.js"></script>
+<script src="js/commuter-logic.js"></script>
+<script src="js/commuter.js"></script>
+</body>
+</html>

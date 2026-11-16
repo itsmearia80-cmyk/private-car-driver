@@ -24,3 +24,10 @@ Google Routes API (primary) lalu OSRM (fallback), dengan objek hasil yang seraga
 - Formula: `max(minFare, baseFare + distance x pricePerKm) + size surcharge`. Round trip doubles the distance. Items marked "bigger than Large" or over 30 kg get a custom quote via WhatsApp (no route call).
 - Current values are the owner's confirmed starting values: Rp5.000/km, minimum fare Rp40.000, size surcharges Document Rp0, Small Rp0, Medium Rp0, Large Rp25.000. Size limits and the banned list are provisional.
 - Tests: `node tests-delivery.js` (formula), `node tests-ui.js` (needs jsdom).
+
+## PRIVARO COMMUTER
+- Page: `commuter.html`. Semua rute, tarif, jadwal, hari operasi, cutoff, dan paket ada di `js/commuter-config.js` (satu-satunya tempat edit). Logika di `js/commuter-logic.js`, UI di `js/commuter.js`.
+- `enabled: false` (default) = tampil "Coming Soon" dan booking ditolak. Ubah ke `true` hanya setelah izin, kendaraan, dan asuransi terverifikasi.
+- Booking = permintaan WhatsApp yang dikonfirmasi manual (status selalu pending_confirmation). Tanpa database, tanpa seat availability otomatis. Setiap permintaan memuat kode `Ref` untuk pencatatan manual.
+- Nilai PROVISIONAL (belum diputuskan pemilik): `bookingCutoffHours`, `maxAdvanceDays`, `blackoutDates`, `mapUrl` titik jemput.
+- Tes: `node tests-commuter.js`.

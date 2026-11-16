@@ -15,7 +15,7 @@ const msgOf = (w) => decodeURIComponent((w.__o[0] || "").split("text=")[1] || ""
   w = await load(dir, "index.html"); d = w.document; $ = (i) => d.getElementById(i);
   const hrefs = [...d.querySelectorAll("a")].map((a) => a.getAttribute("href"));
   ok("landing: links to book/package/delivery", ["book.html", "package.html", "delivery.html"].every((h) => hrefs.includes(h)));
-  ok("landing: three choice cards, no form fields", d.querySelectorAll(".choice").length === 3 && d.querySelectorAll("form,input,select").length === 0);
+  ok("landing: four choice cards, no form fields", d.querySelectorAll(".choice").length === 4 && d.querySelectorAll("form,input,select").length === 0);
   ok("landing: no Rp5.000/km, waiting from config", !/Rp5\.000/.test(d.body.textContent) && /Rp20\.000/.test(d.querySelector(".choices").textContent));
   ok("landing: English only (no Indonesian UI words)", !/(Pesan|Paket|Kembali|Beranda|Sopir|Tanya Jawab|Cara Kerja)/.test(d.body.textContent));
   ok("landing: delivery card shows minimum fare from config", /Minimum fare Rp40\.000/.test(d.querySelector(".choices").textContent));
