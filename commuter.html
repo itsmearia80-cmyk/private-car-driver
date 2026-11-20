@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>PRIVARO COMMUTER | Privaro</title>
+<meta name="description" content="Scheduled shared rides with fixed departure times and fixed pickup and drop-off points between home or work and MRT stations.">
+<meta property="og:title" content="PRIVARO COMMUTER | Privaro">
+<meta property="og:description" content="Scheduled shared rides with fixed departure times and fixed pickup and drop-off points between home or work and MRT stations.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="Privaro, home"><img class="logo" src="assets/logo-header.webp" width="360" height="216" alt="Privaro. Private Ride. Personal Driver."></a>
+  <nav aria-label="Main"><a href="index.html">Home</a><a href="package.html">Packages</a><a href="delivery.html">Delivery</a><a href="commuter.html">Commuter</a><a class="btn sm" href="book.html">Book a ride</a></nav>
+</div></header>
+<main><section class="band pagesec"><div class="wrap">
+  <a class="back" href="index.html">&larr; Back to home</a>
+  <nav class="tabs" aria-label="Services"><a href="book.html">Ride</a><a href="package.html">Package</a><a href="delivery.html">Delivery</a><a href="commuter.html" aria-current="page">Commuter</a></nav>
+  <h1 class="ph">PRIVARO COMMUTER</h1>
+  <p class="muted">Scheduled shared rides with a fixed departure time and fixed pickup and drop-off points, between home or work and MRT stations. Up to 5 passenger seats per trip.</p>
+  <div class="routes" id="routeCards"></div>
+  <p class="note strong" id="cmNote"></p>
+  <div id="cmBook" class="narrow pkgbook" hidden>
+    <h3 id="cmFormTitle">Request seats</h3>
+    <form id="cmForm" novalidate>
+      <label for="cm-route">Route *</label><select id="cm-route" aria-describedby="ce-route"><option value="">Choose a route</option></select><p class="err" id="ce-route" role="alert"></p>
+      <dl id="cmSummary" class="panel"></dl>
+      <label for="cm-date" id="cm-datelabel">Travel Date *</label><input id="cm-date" type="date" aria-describedby="cm-dhint ce-date"><p class="hint" id="cm-dhint"></p><p class="err" id="ce-date" role="alert"></p>
+      <label for="cm-seats">Number of Seats *</label><select id="cm-seats" aria-describedby="ce-seats"></select><p class="err" id="ce-seats" role="alert"></p>
+      <label for="cm-name">Your Name *</label><input id="cm-name" autocomplete="name" aria-describedby="ce-name"><p class="err" id="ce-name" role="alert"></p>
+      <label for="cm-whatsapp">WhatsApp Number *</label><input id="cm-whatsapp" type="tel" inputmode="tel" placeholder="08123456789" autocomplete="tel" aria-describedby="ce-whatsapp"><p class="err" id="ce-whatsapp" role="alert"></p>
+      <label for="cm-notes">Additional Notes</label><textarea id="cm-notes" rows="3" maxlength="500" placeholder="Example: I will travel with a colleague."></textarea>
+      <p class="err form" id="ce-form" role="alert"></p>
+      <button class="btn block wa" id="cm-send" type="submit">REQUEST SEATS VIA WHATSAPP</button>
+      <p class="note">Pickup and drop-off points are fixed. Availability is confirmed by the driver via WhatsApp.</p>
+    </form>
+  </div>
+</div></section></main>
+<footer class="wrap foot"><b class="brand"><img class="mark" src="assets/mark.png" width="24" height="24" alt=""><span data-brand>Privaro</span></b><span id="fWa"></span><span id="fArea"></span><span id="fHours"></span></footer>
+<script src="js/config.js"></script>
+<script src="js/utils/validation.js"></script>
+<script src="js/services/pricingService.js"></script>
+<script src="js/services/whatsappService.js"></script>
+<script src="js/commuter-data.js"></script>
+<script src="js/site.js"></script>
+<script src="js/commuter.js"></script>
+</body>
+</html>

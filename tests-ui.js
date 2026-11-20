@@ -14,13 +14,15 @@ const msgOf = (w) => decodeURIComponent((w.__o[0] || "").split("text=")[1] || ""
   // LANDING
   w = await load(dir, "index.html"); d = w.document; $ = (i) => d.getElementById(i);
   const hrefs = [...d.querySelectorAll("a")].map((a) => a.getAttribute("href"));
-  ok("landing: links to book/package/delivery", ["book.html", "package.html", "delivery.html"].every((h) => hrefs.includes(h)));
-  ok("landing: three choice cards, no form fields", d.querySelectorAll(".choice").length === 3 && d.querySelectorAll("form,input,select").length === 0);
+  ok("landing: links to book/package/delivery", ["book.html", "package.html", "delivery.html", "commuter.html"].every((h) => hrefs.includes(h)));
+  ok("landing: four choice cards, no form fields", d.querySelectorAll(".choice").length === 4 && d.querySelectorAll("form,input,select").length === 0);
   ok("landing: no Rp5.000/km, waiting from config", !/Rp5\.000/.test(d.body.textContent) && /Rp20\.000/.test(d.querySelector(".choices").textContent));
   ok("landing: English only (no Indonesian UI words)", !/(Pesan|Paket|Kembali|Beranda|Sopir|Tanya Jawab|Cara Kerja)/.test(d.body.textContent));
   ok("landing: delivery card shows minimum fare from config", /Minimum fare Rp40\.000/.test(d.querySelector(".choices").textContent));
   ok("landing: old passenger-only FAQ answer is gone", !/not a courier or delivery service/i.test(d.body.textContent));
   ok("landing: two vehicles (Calya for rides, Suzuki APV for delivery)", d.querySelectorAll(".vcard").length === 2 && /Suzuki APV/.test(d.getElementById("vehicle").textContent) && /Toyota Calya/.test(d.getElementById("vehicle").textContent));
+  ok("landing: commuter card with lowest seat price from data", /PRIVARO COMMUTER/.test(d.querySelector(".choices").textContent) && /From Rp30\.000 per seat, one way\./.test(d.querySelector(".choices").textContent));
+  ok("landing: commuter FAQ present", /What is PRIVARO COMMUTER\?/.test(d.body.textContent) && /Monday to Saturday/.test(d.body.textContent));
   ok("landing: footer WhatsApp 6281573011713", $("waBottom").href.includes("wa.me/6281573011713"));
   w.close();
   // BOOK
@@ -123,6 +125,34 @@ const msgOf = (w) => decodeURIComponent((w.__o[0] || "").split("text=")[1] || ""
   w = await loadDv(10); d = w.document; $ = (i) => d.getElementById(i); const typ = (el, v) => { el.value = v; el.dispatchEvent(new w.Event("input", { bubbles: true })); };
   typ($("dl-pickup"), "Petogogan"); await wait(700);
   ok("delivery: address suggestions work on this page", d.querySelectorAll("#dl-pickup-list .ac-opt").length === 1);
+  w.close();
+  // COMMUTER
+  const nextDay = (dow) => { const x = new Date("2099-01-01T00:00:00Z"); while (x.getUTCDay() !== dow) x.setUTCDate(x.getUTCDate() + 1); return x.toISOString().slice(0, 10); };
+  w = await load(dir, "commuter.html"); d = w.document; $ = (i) => d.getElementById(i);
+  ok("commuter: 2 route cards show time, days, price, seats, map links", d.querySelectorAll("#routeCards .rt").length === 2 && /07:00 WIB · Mon–Sat/.test($("routeCards").textContent) && /19:00 WIB · Mon–Sat/.test($("routeCards").textContent)
+    && /Rp35\.000 per seat, one way/.test($("routeCards").textContent) && /Rp30\.000 per seat, one way/.test($("routeCards").textContent) && /Up to 5 seats/.test($("routeCards").textContent) && d.querySelectorAll("#routeCards a[href*='google.com/maps']").length === 4);
+  ok("commuter: Commuter tab active, 4 tabs; form hidden at start", d.querySelector('.tabs a[aria-current="page"]').textContent === "Commuter" && d.querySelectorAll(".tabs a").length === 4 && $("cmBook").hidden);
+  ok("commuter: demand note shown", /may follow passenger demand/.test($("cmNote").textContent) && $("cm-seats").options.length === 5);
+  d.querySelectorAll("#routeCards .rt")[0].querySelector("button").click();
+  ok("commuter: choosing the morning card opens the form with summary (1 seat = Rp35.000)", !$("cmBook").hidden && $("cm-route").value === "morning" && /Rp35\.000/.test($("cmSummary").textContent));
+  $("cm-seats").value = "2"; $("cm-seats").dispatchEvent(new w.Event("change"));
+  ok("commuter: 2 seats = Rp70.000 estimated total", /Rp70\.000/.test($("cmSummary").textContent));
+  $("cmForm").dispatchEvent(new w.Event("submit", { cancelable: true }));
+  ok("commuter: empty form rejected", w.__o.length === 0 && $("ce-date").textContent && $("ce-name").textContent && $("ce-whatsapp").textContent);
+  $("cm-name").value = "Budi"; $("cm-whatsapp").value = "08123456789"; $("cm-date").value = nextDay(0); $("cmForm").dispatchEvent(new w.Event("submit", { cancelable: true }));
+  ok("commuter: Sunday rejected (runs Mon-Sat)", w.__o.length === 0 && /runs Mon–Sat/.test($("ce-date").textContent));
+  $("cm-date").value = "2020-01-06"; $("cmForm").dispatchEvent(new w.Event("submit", { cancelable: true }));
+  ok("commuter: past date rejected", w.__o.length === 0 && /today or a future date/.test($("ce-date").textContent));
+  $("cm-date").value = nextDay(1); $("cmForm").dispatchEvent(new w.Event("submit", { cancelable: true })); const cmsg = msgOf(w);
+  ok("commuter: valid Monday request opens WhatsApp with route, pickup, time, seats, total", (w.__o[0] || "").startsWith("https://wa.me/6281573011713") && /memesan kursi PRIVARO COMMUTER/.test(cmsg) && /Rute: Morning Commuter/.test(cmsg)
+    && /Jemput: The Garden Sawangan, Depok/.test(cmsg) && /Tujuan: MRT Blok M/.test(cmsg) && /Berangkat: 07:00 WIB/.test(cmsg) && /Jumlah Kursi: 2/.test(cmsg) && /total Rp70\.000/.test(cmsg) && /Senin,/.test(cmsg));
+  w.close();
+  const tmpC = fs.mkdtempSync(path.join(os.tmpdir(), "pc-")); fs.cpSync(dir, tmpC, { recursive: true, filter: (s) => !s.includes("node_modules") });
+  const cd = path.join(tmpC, "js/commuter-data.js"); fs.writeFileSync(cd, fs.readFileSync(cd, "utf8").replace('mode: "booking"', 'mode: "interest"'));
+  w = await load(tmpC, "commuter.html"); d = w.document; $ = (i) => d.getElementById(i);
+  d.querySelectorAll("#routeCards .rt")[1].querySelector("button").click(); $("cm-name").value = "Sari"; $("cm-whatsapp").value = "08129876543";
+  $("cmForm").dispatchEvent(new w.Event("submit", { cancelable: true })); const im = msgOf(w);
+  ok("commuter (interest mode): date optional, interest wording, no price promise", /opening soon/.test($("cmNote").textContent) && /REGISTER INTEREST/.test($("cm-send").textContent) && /tertarik dengan PRIVARO COMMUTER/.test(im) && /Rute: Evening Commuter/.test(im) && !/Tarif:/.test(im));
   w.close();
   // PACKAGE
   w = await load(dir, "package.html"); d = w.document; $ = (i) => d.getElementById(i);

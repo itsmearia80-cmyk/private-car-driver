@@ -1,0 +1,21 @@
+// Tes data & logika PRIVARO COMMUTER: node tests-commuter.js
+const { COMMUTER: C, CommuterLogic: L } = require("./js/commuter-data.js");
+const t = (n, a, e) => { const ok = JSON.stringify(a) === JSON.stringify(e); console.log((ok ? "PASS " : "FAIL ") + n, ok ? "" : `(got ${JSON.stringify(a)}, want ${JSON.stringify(e)})`); if (!ok) process.exitCode = 1; };
+const [m, e] = C.routes;
+t("two routes with the specified names", [m.name, e.name], ["Morning Commuter", "Evening Commuter"]);
+t("morning: The Garden Sawangan -> MRT Blok M, 07:00, Rp35.000", [m.from, m.to, m.time, m.price], ["The Garden Sawangan, Depok", "MRT Blok M, Jakarta Selatan", "07:00", 35000]);
+t("evening: SPBU Pertamina near Tebet Eco Park -> MRT Lebak Bulus, 19:00, Rp30.000", [e.from, e.to, e.time, e.price], ["SPBU Pertamina near Tebet Eco Park, Jakarta Selatan", "MRT Lebak Bulus, Jakarta Selatan", "19:00", 30000]);
+t("max 5 seats, default mode is booking", [C.maxSeats, C.mode], [5, "booking"]);
+t("operating days Mon-Sat label", L.daysLabel(m), "Mon–Sat");
+t("Monday (2026-11-16) is an operating day", L.isOperatingDay(m, "2026-11-16"), true);
+t("Saturday (2026-11-21) is an operating day", L.isOperatingDay(m, "2026-11-21"), true);
+t("Sunday (2026-11-22) is not", L.isOperatingDay(m, "2026-11-22"), false);
+const now = (dateISO, minutes) => ({ dateISO, minutes });
+t("same day, before 07:00 -> not passed", L.departurePassed(m, "2026-11-19", now("2026-11-19", 6 * 60 + 59)), false);
+t("same day, at 07:00 -> passed", L.departurePassed(m, "2026-11-19", now("2026-11-19", 7 * 60)), true);
+t("evening 19:00 still open at 18:59, passed at 19:00", [L.departurePassed(e, "2026-11-19", now("2026-11-19", 18 * 60 + 59)), L.departurePassed(e, "2026-11-19", now("2026-11-19", 19 * 60))], [false, true]);
+t("past date -> passed; future date -> not passed", [L.departurePassed(m, "2026-11-18", now("2026-11-19", 0)), L.departurePassed(m, "2026-11-20", now("2026-11-19", 1439))], [true, false]);
+t("Jakarta clock: 00:30 UTC = 07:30 WIB same day", L.jakartaNow(new Date("2026-11-19T00:30:00Z")), { dateISO: "2026-11-19", minutes: 7 * 60 + 30 });
+t("Jakarta clock: 17:30 UTC = 00:30 WIB NEXT day", L.jakartaNow(new Date("2026-11-19T17:30:00Z")), { dateISO: "2026-11-20", minutes: 30 });
+t("total = seats x price (3 seats morning = Rp105.000)", L.total(m, 3), 105000);
+t("long date in Indonesian", L.longDate("2026-11-16"), "Senin, 16 November 2026");
