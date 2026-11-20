@@ -54,7 +54,7 @@ details{border-bottom:1px solid var(--color-border);padding:14px 0}summary{curso
 .pkg h3{margin:0;font-size:1.05rem}.pkg-price{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;margin:4px 0 0;color:var(--color-primary)}.pkg-km{margin:0 0 12px;color:var(--color-muted);font-weight:600}.pkg .btn{margin-top:auto}
 .pkgbook{margin:28px auto 0}#pkgSummary{margin:16px 0 0}
 #packages.band{background:var(--color-background)}
-.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
 .choice{display:flex;flex-direction:column;gap:10px;background:var(--color-surface);border:2px solid var(--color-border);border-radius:14px;padding:28px;text-decoration:none;transition:border-color .15s,transform .15s}
 .choice:hover,.choice:focus-visible{border-color:var(--color-primary);transform:translateY(-2px)}
 .choice b{font-size:1.4rem;letter-spacing:-.01em}.choice span{color:var(--color-muted)}
@@ -90,3 +90,9 @@ details.plain{margin:14px 0 0;border:0;padding:0}details.plain summary{font-weig
 .vstrip img{width:150px;height:auto;border-radius:8px;flex:none}.vstrip div{display:flex;flex-direction:column;gap:2px}.vstrip span{color:var(--color-muted);font-size:.9rem}
 @media(max-width:480px){.vstrip{flex-direction:column;align-items:flex-start}.vstrip img{width:100%}}
 .addstop{margin-top:12px}.linkbtn{background:none;border:0;color:var(--color-muted);text-decoration:underline;cursor:pointer;padding:6px 0;font:inherit;font-size:.9rem}
+.tabs{overflow-x:auto}.tabs a{white-space:nowrap}
+@media(max-width:480px){.tabs a{padding:10px 12px;font-size:.92rem}}
+.routes{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:8px}
+.rt{background:var(--color-surface);border:1px solid var(--color-border);border-top:4px solid var(--color-accent);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:8px}
+.rt h3{margin:0;font-size:1.15rem}.rt p{margin:0}.rt-time{font-size:1.5rem;font-weight:800;color:var(--color-primary)}
+.rt-place{font-size:.95rem}.rt-place a{font-size:.85rem;color:var(--color-primary);margin-left:4px}.rt-price{font-weight:700}.rt-meta,.rt-desc{color:var(--color-muted);font-size:.92rem}.rt .btn{margin-top:auto}

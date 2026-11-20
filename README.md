@@ -24,3 +24,10 @@ Google Routes API (primary) lalu OSRM (fallback), dengan objek hasil yang seraga
 - Formula: `max(minFare, baseFare + distance x pricePerKm) + size surcharge`. Round trip doubles the distance. Items marked "bigger than Large" or over 30 kg get a custom quote via WhatsApp (no route call).
 - Current values are the owner's confirmed starting values: Rp5.000/km, minimum fare Rp40.000, size surcharges Document Rp0, Small Rp0, Medium Rp0, Large Rp25.000. Size limits and the banned list are provisional.
 - Tests: `node tests-delivery.js` (formula), `node tests-ui.js` (needs jsdom).
+
+## PRIVARO COMMUTER
+- Page: `commuter.html` (UI `js/commuter.js`). Routes, prices, times, days, seat limit and mode live in `js/commuter-data.js` (config.js is not touched).
+- Two routes: Morning Commuter (The Garden Sawangan to MRT Blok M, 07:00 WIB, Rp35.000 per seat) and Evening Commuter (SPBU Pertamina near Tebet Eco Park to MRT Lebak Bulus, 19:00 WIB, Rp30.000 per seat). Mon-Sat, max 5 seats.
+- `mode: "booking"` = seat requests confirmed by WhatsApp. `mode: "interest"` = only registers interest (use while permits are being verified).
+- No database: seat availability is confirmed manually by the owner. Date checks use Jakarta time (WIB).
+- Tests: `node tests-commuter.js` (logic), `node tests-ui.js` (needs jsdom).
